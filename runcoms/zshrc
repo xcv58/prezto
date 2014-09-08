@@ -12,6 +12,7 @@ fi
 
 # Customize to your needs...
 alias macvim="open -a MacVim"
+alias l="ls -l"
 alias lsg="ls | grep "
 alias lslg="ls -a | grep "
 
