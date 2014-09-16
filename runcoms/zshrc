@@ -108,6 +108,10 @@ export YARN_HOME=$HADOOP_INSTALL
 # Set JAVA_HOME
 export JAVA_HOME=$(/usr/libexec/java_home)
 
+# For sed error: illegal byte sequence. via http://stackoverflow.com/questions/19242275/re-error-illegal-byte-sequence-on-mac-os-x
+export LC_CTYPE=C
+export LANG=C
+
 # for emacs term
 if [[ -n ${INSIDE_EMACS} ]]; then
         # This shell runs inside an Emacs *shell*/*term* buffer.
