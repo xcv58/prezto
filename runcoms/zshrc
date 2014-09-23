@@ -15,6 +15,7 @@ alias macvim="open -a MacVim"
 alias l="ls -lh"
 alias lsg="ls | grep "
 alias lslg="ls -a | grep "
+alias lg="ls -lh | grep "
 
 # remove rm -i to avoid useless confirm.
 alias rm="nocorrect rm"
@@ -114,6 +115,10 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 # For sed error: illegal byte sequence. via http://stackoverflow.com/questions/19242275/re-error-illegal-byte-sequence-on-mac-os-x
 export LC_CTYPE=C
 export LANG=C
+
+# Fix jekyll "invalid byte sequence in US-ASCII" error
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # for emacs term
 if [[ -n ${INSIDE_EMACS} ]]; then
