@@ -85,6 +85,9 @@ export PATH=/Applications/Emacs.app/Contents/MacOS/bin:$PATH
 # Path for /usr/local/bin
 export PATH=/usr/local/bin:$PATH
 
+# Path for git
+export PATH=/usr/local/git/bin:$PATH
+
 # add current directory to PATH
 export PATH=.:$PATH
 
