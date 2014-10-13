@@ -100,6 +100,10 @@ export PATH=$PATH:~/os161/tools/bin
 # Path for Matlab
 export PATH=$PATH:/Applications/MATLAB_R2013a.app/bin
 
+# Path for Android
+export PATH=$PATH:~/android-sdk-macosx/tools
+export ANDROID_HOME=~/android-sdk-macosx
+
 # CLASSPATH for TLA+
 export CLASSPATH=$CLASSPATH:/Users/xcv58/Dropbox/Buffalo/586/tla
 
@@ -113,7 +117,10 @@ export HADOOP_HDFS_HOME=$HADOOP_INSTALL
 export YARN_HOME=$HADOOP_INSTALL
 
 # Set JAVA_HOME
-export JAVA_HOME=$(/usr/libexec/java_home)
+if [[ -d /usr/libexec/java_home ]]
+then
+   export JAVA_HOME=$(/usr/libexec/java_home)
+fi
 
 # For sed error: illegal byte sequence. via http://stackoverflow.com/questions/19242275/re-error-illegal-byte-sequence-on-mac-os-x
 export LC_CTYPE=C
