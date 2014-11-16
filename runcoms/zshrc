@@ -57,7 +57,7 @@ alias o="open -a Preview"
 alias db="cd ~/root && mips-harvard-os161-gdb kernel"
 
 # for Emacs and EmacsClient
-alias ec="emacsclient"
+alias ec="emacsclient -n"
 # alias emacs="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient --alternate-editor=/Applications/Emacs.app/Contents/MacOS/Emacs"
 # ec()
 # {
@@ -101,8 +101,9 @@ export PATH=$PATH:~/os161/tools/bin
 export PATH=$PATH:/Applications/MATLAB_R2013a.app/bin
 
 # Path for Android
-export PATH=$PATH:~/android-sdk-macosx/tools
-export ANDROID_HOME=~/android-sdk-macosx
+export PATH=$PATH:~/sdk-android
+export PATH=$PATH:~/SDK-Android/platform-tools
+export ANDROID_HOME=~/sdk-android
 
 # CLASSPATH for TLA+
 export CLASSPATH=$CLASSPATH:/Users/xcv58/Dropbox/Buffalo/586/tla
