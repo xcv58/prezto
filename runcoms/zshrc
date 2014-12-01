@@ -49,6 +49,16 @@ alias gck="git checkout"
 alias grsh="git reset --hard"
 alias grss="git reset --soft"
 
+# for Android develop
+alias ashell="adb shell"
+alias alog="adb logcat"
+alias alc="adb logcat -c"
+alias als="adb logcat -s"
+alias ainstall="adb install -r"
+alias auninstall="adb uninstall"
+alias apull="adb pull"
+alias areboot="adb reboot"
+alias aflashall="fastboot flashall -w"
 
 # for Preview open pdf
 alias o="open -a Preview"
