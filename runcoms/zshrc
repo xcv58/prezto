@@ -108,7 +108,7 @@ export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin
 export PATH=$PATH:~/os161/tools/bin
 
 # Path for Matlab
-export PATH=$PATH:/Applications/MATLAB_R2013a.app/bin
+export PATH=$PATH:/Applications/MATLAB_R2014b.app/bin
 
 # Path for Android
 export PATH=$PATH:~/sdk-android
