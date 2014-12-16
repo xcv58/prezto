@@ -60,6 +60,9 @@ alias apull="adb pull"
 alias areboot="adb reboot"
 alias aflashall="fastboot flashall -w"
 
+# filetree
+alias filetree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
+
 # for Preview open pdf
 alias o="open -a Preview"
 
