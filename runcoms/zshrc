@@ -59,6 +59,7 @@ alias auninstall="adb uninstall"
 alias apull="adb pull"
 alias areboot="adb reboot"
 alias aflashall="fastboot flashall -w"
+alias aflash="fastboot flashall"
 
 # filetree
 alias filetree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
@@ -149,3 +150,13 @@ if [[ -n ${INSIDE_EMACS} ]]; then
 fi
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+bindkey -v
+bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
+bindkey "^A" vi-beginning-of-line
+bindkey "^E" vi-end-of-line
+bindkey "^U" backward-kill-line
+bindkey "^K" kill-line
+bindkey "^P" up-line-or-search
+bindkey "^N" down-line-or-search
