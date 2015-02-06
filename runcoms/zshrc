@@ -154,8 +154,8 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 bindkey -v
 bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
-bindkey "^A" vi-beginning-of-line
-bindkey "^E" vi-end-of-line
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
 bindkey "^U" backward-kill-line
 bindkey "^K" kill-line
 bindkey "^P" up-line-or-search
