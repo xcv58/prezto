@@ -165,7 +165,13 @@ bindkey "^W" backward-kill-word
 bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
 
-precmd () print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f in ${_prompt_xcv58_colors[5]}%~%f "'${vcs_info_msg_0_}'
+precmd () prepare_first_line
+
+prepare_first_line () {
+    prompt_xcv58_precmd
+    print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f in ${_prompt_xcv58_colors[5]}%~%f "'${vcs_info_msg_0_}'
+}
+
 vi_mode_indicator () {
     case ${KEYMAP} in
       (vicmd)      echo "%F{red}[% VI]% %r%f" ;;

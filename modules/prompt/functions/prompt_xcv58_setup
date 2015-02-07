@@ -84,11 +84,6 @@ function prompt_xcv58_setup {
 
   # Set python-info parameters.
   zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
-
-  # Define prompts.
-  PS1="${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f in ${_prompt_xcv58_colors[5]}%~%f "'${vcs_info_msg_0_}'"
-$ "
-  RPS1='%D{%H:%M:%S% %m-%d}'
 }
 
 prompt_xcv58_setup "$@"
