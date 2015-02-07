@@ -84,9 +84,9 @@ function prompt_xcv58_setup {
 
   # Set python-info parameters.
   zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
-
+  xcv58_time='%D{%m-%d %H:%M:%S}'
   PS1="\$ "
-  RPS1='%D{%H:%M:%S %m-%d}'
+  RPS1=${xcv58_time}
 }
 
 prompt_xcv58_setup "$@"
