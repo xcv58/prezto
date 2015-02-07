@@ -11,6 +11,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+export EDITOR=vim
+
 alias macvim="open -a MacVim"
 alias l="ls -lh"
 alias lsg="ls | grep "
@@ -156,7 +158,19 @@ bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
+bindkey "^D" delete-char
 bindkey "^U" backward-kill-line
 bindkey "^K" kill-line
+bindkey "^W" backward-kill-word
 bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
+
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $(git_custom_status) $EPS1"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1
