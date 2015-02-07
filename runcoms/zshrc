@@ -165,12 +165,22 @@ bindkey "^W" backward-kill-word
 bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
 
+precmd () print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f in ${_prompt_xcv58_colors[5]}%~%f "'${vcs_info_msg_0_}'
+vi_mode_indicator () {
+    case ${KEYMAP} in
+      (vicmd)      echo "%F{red}[% VI]% %r%f" ;;
+      (main|viins) echo "" ;;
+      (*)          echo "" ;;
+    esac
+  }
+
 function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $(git_custom_status) $EPS1"
+    VIM_PROMPT="$(vi_mode_indicator)"
+    PS1="${VIM_PROMPT}\$ "
+    RPS1='%D{%H:%M:%S% %m-%d}'
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}  $EPS1${RPS1}"
     zle reset-prompt
 }
 
 zle -N zle-line-init
 zle -N zle-keymap-select
-export KEYTIMEOUT=1
