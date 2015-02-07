@@ -183,7 +183,7 @@ vi_mode_indicator () {
 function zle-line-init zle-keymap-select {
     VIM_PROMPT="$(vi_mode_indicator)"
     PS1="${VIM_PROMPT}\$ "
-    RPS1='%D{%H:%M:%S% %m-%d}'
+    RPS1='%D{%H:%M:%S %m-%d}'
     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}  $EPS1${RPS1}"
     zle reset-prompt
 }

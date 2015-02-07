@@ -86,7 +86,7 @@ function prompt_xcv58_setup {
   zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
 
   PS1="\$ "
-  RPS1='%D{%H:%M:%S% %m-%d}'
+  RPS1='%D{%H:%M:%S %m-%d}'
 }
 
 prompt_xcv58_setup "$@"
