@@ -159,6 +159,8 @@ bindkey "^S" history-incremental-search-forward
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
 bindkey "^D" delete-char
+bindkey "^H" backward-delete-char
+bindkey "^B" backward-char
 bindkey "^U" backward-kill-line
 bindkey "^K" kill-line
 bindkey "^W" backward-kill-word
