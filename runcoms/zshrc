@@ -166,6 +166,7 @@ bindkey "^K" kill-line
 bindkey "^W" backward-kill-word
 bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
+bindkey "^L" xcv58-clear-screen
 
 trapwinch () {
     prepare_first_line
@@ -176,6 +177,14 @@ precmd () {
     prompt_xcv58_precmd
     prepare_first_line
 }
+
+function xcv58-clear-screen () {
+    clear
+    prepare_first_line
+    zle reset-prompt
+}
+
+zle -N xcv58-clear-screen
 
 prepare_first_line () {
     print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f in ${_prompt_xcv58_colors[5]}%~%f "'${vcs_info_msg_0_}'
