@@ -161,6 +161,7 @@ bindkey "^E" end-of-line
 bindkey "^D" delete-char
 bindkey "^H" backward-delete-char
 bindkey "^B" backward-char
+bindkey "^F" forward-char
 bindkey "^U" backward-kill-line
 bindkey "^K" kill-line
 bindkey "^W" backward-kill-word
@@ -187,6 +188,7 @@ function xcv58-clear-screen () {
 zle -N xcv58-clear-screen
 
 prepare_first_line () {
+    print ""
     print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f in ${_prompt_xcv58_colors[5]}%~%f "'${vcs_info_msg_0_}'
 }
 
