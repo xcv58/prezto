@@ -81,7 +81,7 @@ alias ec="emacsclient -n"
 # }
 # [ -f /Applications/Emacs.app/Contents/MacOS/Emacs ] && alias emacsclient="/usr/local/bin/emacsclient" && alias ec=emacsclient
 # [ -f /Applications/Emacs.app/Contents/MacOS/Emacs ] && alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw" && alias emacsclient="/usr/local/bin/emacsclient" && alias ec=emacsclient
-export ALTERNATE_EDITOR=""
+export ALTERNATE_EDITOR="vim"
 # [ -f /Applications/Emacs.app/Contents/MacOS/Emacs ] && echo "File exists" || echo "File does not exists"
 
 
@@ -154,20 +154,27 @@ fi
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 bindkey -v
-bindkey "^R" history-incremental-pattern-search-backward
-bindkey "^S" history-incremental-pattern-search-forward
-bindkey "^A" beginning-of-line
-bindkey "^E" end-of-line
-bindkey "^D" delete-char
-bindkey "^H" backward-delete-char
-bindkey "^B" backward-char
-bindkey "^F" forward-char
-bindkey "^U" backward-kill-line
-bindkey "^K" kill-line
-bindkey "^W" backward-kill-word
-bindkey "^P" up-line-or-search
-bindkey "^N" down-line-or-search
-bindkey "^L" xcv58-clear-screen
+bindkey -M viins "^R" history-incremental-pattern-search-backward
+bindkey -M vicmd "^R" history-incremental-pattern-search-backward
+bindkey -M viins "^S" history-incremental-pattern-search-forward
+bindkey -M vicmd "^S" history-incremental-pattern-search-forward
+bindkey -M viins "^A" beginning-of-line
+bindkey -M vicmd "^A" beginning-of-line
+bindkey -M viins "^E" end-of-line
+bindkey -M vicmd "^E" end-of-line
+bindkey -M viins "^D" delete-char
+bindkey -M viins "^H" backward-delete-char
+bindkey -M viins "^B" backward-char
+bindkey -M viins "^F" forward-char
+bindkey -M viins "^U" backward-kill-line
+bindkey -M viins "^K" kill-line
+bindkey -M vicmd "^K" kill-line
+bindkey -M viins "^W" backward-kill-word
+bindkey -M vicmd "^W" backward-kill-word
+bindkey -M viins "^P" up-line-or-search
+bindkey -M viins "^N" down-line-or-search
+bindkey -M viins "^V" edit-command-line
+bindkey -M viins "^L" xcv58-clear-screen
 
 trapwinch () {
     prepare_first_line
