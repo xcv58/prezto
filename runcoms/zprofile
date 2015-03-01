@@ -17,8 +17,8 @@ fi
 # Editors
 #
 
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='vim -u ~/.vim/vimrc-lite'
+export VISUAL='vim -u ~/.vim/vimrc-lite'
 export PAGER='less'
 
 #
