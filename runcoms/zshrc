@@ -11,8 +11,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-export EDITOR=vim
-
 alias macvim="open -a MacVim"
 alias l="ls -lh"
 alias lsg="ls | grep "
