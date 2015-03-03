@@ -146,8 +146,13 @@ alias du='du -kh'
 if (( $+commands[htop] )); then
   alias top=htop
 else
-  alias topc='top -o cpu'
-  alias topm='top -o vsize'
+  if [[ "$OSTYPE" == (darwin*|*bsd*) ]]; then
+    alias topc='top -o cpu'
+    alias topm='top -o vsize'
+  else
+    alias topc='top -o %CPU'
+    alias topm='top -o %MEM'
+  fi
 fi
 
 # Miscellaneous
@@ -191,5 +196,5 @@ function find-exec {
 
 # Displays user owned processes status.
 function psu {
-  ps -U "${1:-$USER}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
+  ps -U "${1:-$LOGNAME}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
 }
