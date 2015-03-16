@@ -96,6 +96,10 @@ export PATH=~/Dropbox/Software/MacHome/Shell_script/os161:$PATH
 export PATH=/Applications/Emacs.app/Contents/MacOS:$PATH
 export PATH=/Applications/Emacs.app/Contents/MacOS/bin:$PATH
 
+# Path for MacVim
+export PATH=/Applications/MacVim.app/Contents/MacOS:$PATH
+alias vim=Vim
+
 # Path for /usr/local/bin
 export PATH=/usr/local/bin:$PATH
 
