@@ -108,6 +108,9 @@ export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin
 # Path for os161
 export PATH=$PATH:~/os161/tools/bin
 
+# Go
+export GOPATH=/usr/local/opt/go/libexec/bin
+
 # Path for Matlab
 export PATH=$PATH:/Applications/MATLAB_R2014b.app/bin
 
