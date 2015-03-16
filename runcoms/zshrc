@@ -84,7 +84,7 @@ export ALTERNATE_EDITOR="vim"
 
 
 # Autojump
-[[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] && . ~/.autojump/etc/profile.d/autojump.zsh
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
@@ -115,8 +115,8 @@ export GOPATH=/usr/local/opt/go/libexec/bin
 export PATH=$PATH:/Applications/MATLAB_R2014b.app/bin
 
 # Path for Android
-export PATH=$PATH:~/sdk-android
-export PATH=$PATH:~/SDK-Android/platform-tools
+export PATH=$PATH:~/Library/SDK-android
+export PATH=$PATH:~/Library/SDK-Android/platform-tools
 export ANDROID_HOME=~/sdk-android
 
 # CLASSPATH for TLA+
