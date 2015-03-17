@@ -99,7 +99,7 @@ export PATH=/Applications/Emacs.app/Contents/MacOS/bin:$PATH
 
 # Path for MacVim
 export PATH=/Applications/MacVim.app/Contents/MacOS:$PATH
-alias vim=Vim
+command -v Vim >/dev/null 2>&1 && alias vim=Vim
 
 # Path for /usr/local/bin
 export PATH=/usr/local/bin:$PATH
