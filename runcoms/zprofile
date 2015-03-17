@@ -16,13 +16,15 @@ fi
 #
 # Editors
 #
-if [[ -f ~/.vim/vimrc-lite ]]; then
-  export EDITOR='vim -u ~/.vim/vimrc-lite'
-  export VISUAL='vim -u ~/.vim/vimrc-lite'
-else
-  export EDITOR='vim'
-  export VISUAL='vim'
-fi
+# if [[ -f ~/.vim/vimrc-lite ]]; then
+#   export EDITOR='vim -u ~/.vim/vimrc-lite'
+#   export VISUAL='vim -u ~/.vim/vimrc-lite'
+# else
+#   export EDITOR='vim'
+#   export VISUAL='vim'
+# fi
+export EDITOR='vim --noplugin'
+export VISUAL='vim --noplugin'
 export PAGER='less'
 
 #
