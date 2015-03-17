@@ -84,7 +84,8 @@ export ALTERNATE_EDITOR="vim"
 
 
 # Autojump
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+[[ `uname` == "Linux" ]] && source /usr/share/autojump/autojump.zsh
+[[ `uname` == "Darwin" ]] && [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
