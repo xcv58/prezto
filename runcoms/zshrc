@@ -138,6 +138,7 @@ export YARN_HOME=$HADOOP_INSTALL
 # Set JAVA_HOME
 function jdk() {
     JVM_PATH=/Library/Java/JavaVirtualMachines
+    [[ ! -d ${JVM_PATH} ]] && return
     JAVA_CANDIDATE=($(ls ${JVM_PATH}))
     [[ $# == 0 ]] && select opt in "${JAVA_CANDIDATE[@]}"; do; [[ ${opt} != "" ]] && break; done || opt=$*
     for i in ${JAVA_CANDIDATE[@]}
