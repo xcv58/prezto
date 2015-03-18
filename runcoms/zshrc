@@ -138,4 +138,4 @@ command -v adb >/dev/null 2>&1 && {
 [[ -s "${ZDOTDIR:-$HOME}/.zshrc_vimode" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_vimode"
 
 # local config
-[[ -s "${ZDOTDIR:-$HOME}/.zshrc_custom" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_custom"
+[[ -s "${ZDOTDIR:-$HOME}/.zshrc_local" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_local"
