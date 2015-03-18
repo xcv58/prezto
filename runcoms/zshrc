@@ -28,8 +28,8 @@ alias -s tex=vim
 alias -s bib=vim
 
 # for autojump
-[[ `uname` == "Linux" ]] && source /usr/share/autojump/autojump.zsh
-[[ `uname` == "Darwin" ]] && [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+[[ `uname` == "Linux" && -f /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
+[[ `uname` == "Darwin" && -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && source $(brew --prefix)/etc/profile.d/autojump.sh
 
 # for Mac OS only
 [[ -s "${ZDOTDIR:-$HOME}/.zshrc_mac" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_mac"
