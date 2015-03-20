@@ -52,8 +52,8 @@ export PATH=.:${PATH}
 export PATH=${PATH}:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin
 
 # Path for Android
-[[ -d ~/Library/SDK-Android ]] && {
-    export ANDROID_HOME=~/Library/SDK-Android
+[[ -d ~/SDK-Android ]] && {
+    export ANDROID_HOME=~/SDK-Android
     export PATH=${PATH}:${ANDROID_HOME}
     export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 }
