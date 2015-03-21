@@ -117,7 +117,7 @@ command -v git >/dev/null 2>&1 && {
 # alias for Android develop
 command -v adb >/dev/null 2>&1 && {
     alias ashell="adb shell"
-    alias alog="adb logcat"
+    alias alog="adb logcat -v threadtime"
     alias alc="adb logcat -c"
     alias als="adb logcat -s"
     alias ainstall="adb install -r"
@@ -126,6 +126,11 @@ command -v adb >/dev/null 2>&1 && {
     alias areboot="adb reboot"
     alias aflashall="fastboot flashall -w"
     alias aflash="fastboot flashall"
+}
+
+# alias for Meteor
+command -v meteor >/dev/null 2>&1 && {
+    alias m="meteor"
 }
 
 # for OS161 CSE 521
