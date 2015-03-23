@@ -17,6 +17,9 @@ alias o="open -a Preview"
     export PATH=/Applications/Emacs.app/Contents/MacOS/bin:${PATH}
 }
 
+# alias for Emacs in Terminal
+command -v Emacs >/dev/null 2>&1 && alias emacs="Emacs -nw"
+
 # Path for MacVim
 [[ -d /Applications/MacVim.app/Contents/MacOS ]] && {
     export PATH=/Applications/MacVim.app/Contents/MacOS:${PATH}
