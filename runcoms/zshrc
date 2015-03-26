@@ -102,6 +102,7 @@ command -v hadoop >/dev/null 2>&1 && {
 # alias for git
 command -v git >/dev/null 2>&1 && {
     alias gph="git push github"
+    alias gs="git status -s"
     alias gss="git status -s"
     alias gcma="git commit -am"
     alias gcmm="git commit -m"
