@@ -20,6 +20,15 @@ bindkey -M viins "^P" up-line-or-search
 bindkey -M viins "^N" down-line-or-search
 bindkey -M viins "^V" edit-command-line
 bindkey -M viins "^L" xcv58-clear-screen
+bindkey -M viins "\e." insert-last-word
+bindkey -M viins "\e1" insert-first-word
+bindkey -M viins "\e2" insert-last-word
+
+function insert-first-word () {
+    zle insert-last-word -- -1 1 -
+}
+
+zle -N insert-first-word
 
 trapwinch () {
     prepare_first_line
