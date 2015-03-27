@@ -32,7 +32,7 @@ alias -s bib=vim
 [[ `uname` == "Darwin" && -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && source $(brew --prefix)/etc/profile.d/autojump.sh
 
 # for Mac OS only
-[[ -s "${ZDOTDIR:-$HOME}/.zshrc_mac" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_mac"
+[[ -s "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
 
 # for Emacs and EmacsClient
 alias ec="emacsclient -n"
@@ -133,7 +133,7 @@ command -v meteor >/dev/null 2>&1 && {
 }
 
 # Vi Mode
-[[ -s "${ZDOTDIR:-$HOME}/.zshrc_vimode" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_vimode"
+[[ -s "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh"
 
 # local config
 [[ -s "${ZDOTDIR:-$HOME}/.zshrc_local" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_local"
