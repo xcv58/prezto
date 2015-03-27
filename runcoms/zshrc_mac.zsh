@@ -8,28 +8,32 @@ alias o="open -a Preview"
 # alias filetree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 
 # Path for Shell script
-[[ -d ~/Dropbox/Software/MacHome ]] && export PATH=~/Dropbox/Software/MacHome:${PATH}
-[[ -d ~/Dropbox/Software/MacHome/OS-161-Scripts ]] && export PATH=~/Dropbox/Software/MacHome/OS-161-Scripts:${PATH}
+MAC_PATH=(
+    ~/Dropbox/Software/MacHome
+    ~/Dropbox/Software/MacHome/Shell_script
+    ~/Dropbox/Software/MacHome/Shell_script/AppleScript
+    ~/Dropbox/Software/MacHome/OS-161-Scripts
+)
+for i in ${MAC_PATH[@]}
+do
+    insertPath ${i}
+done
 
 # Path for Emacs
-[[ -d /Applications/Emacs.app/Contents/MacOS ]] && {
-    export PATH=/Applications/Emacs.app/Contents/MacOS:${PATH}
-    export PATH=/Applications/Emacs.app/Contents/MacOS/bin:${PATH}
-}
+insertPath /Applications/Emacs.app/Contents/MacOS
+insertPath /Applications/Emacs.app/Contents/MacOS/bin
 
 # alias for Emacs in Terminal
 command -v Emacs >/dev/null 2>&1 && alias emacs="Emacs -nw"
 
 # Path for MacVim
-[[ -d /Applications/MacVim.app/Contents/MacOS ]] && {
-    export PATH=/Applications/MacVim.app/Contents/MacOS:${PATH}
-}
+insertPath /Applications/MacVim.app/Contents/MacOS
 
 # alias vim to Vim for compatible
 command -v Vim >/dev/null 2>&1 && alias vim=Vim
 
 # Path for Matlab
-[[ -d /Applications/MATLAB_R2014b.app/bin ]] && export PATH=${PATH}:/Applications/MATLAB_R2014b.app/bin
+insertPath /Applications/MATLAB_R2014b.app/bin
 
 # Set JAVA_HOME, this is Mac OS only
 # for Ubuntu please use sudo update-alternatives --config java

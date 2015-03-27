@@ -1,4 +1,3 @@
-
 alias l="ls -lh"
 alias lsg="ls | grep "
 alias lslg="ls -a | grep "

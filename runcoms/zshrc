@@ -6,8 +6,20 @@
 #   xcv58 <i@xcv58.com>
 #
 
+insertPath () {
+    [[ -d ${*} ]] && export PATH=${*}:${PATH}
+}
+
+appendPath () {
+    [[ -d ${*} ]] && export PATH=${PATH}:${*}
+}
+
+sourceFile () {
+    [[ -s ${*} ]] && source ${*}
+}
+
 # Source Prezto.
-[[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+sourceFile "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
 # Customize to your needs...
 
@@ -16,7 +28,7 @@
 [[ `uname` == "Darwin" && -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && source $(brew --prefix)/etc/profile.d/autojump.sh
 
 # for Mac OS only
-[[ -s "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
+[[ `uname` == "Darwin" ]] && sourceFile "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
 
 # for Emacs and EmacsClient
 alias ec="emacsclient -n"
@@ -27,7 +39,7 @@ export ALTERNATE_EDITOR="vim"
 [[ -d /usr/local/opt/groovy/libexec ]] && export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 # Path for /usr/local/bin
-export PATH=/usr/local/bin:${PATH}
+insertPath /usr/local/bin
 
 # add current directory to PATH
 export PATH=.:${PATH}
@@ -38,8 +50,8 @@ export PATH=${PATH}:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin
 # Path for Android
 [[ -d ~/SDK-Android ]] && {
     export ANDROID_HOME=~/SDK-Android
-    export PATH=${PATH}:${ANDROID_HOME}
-    export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+    appendPath ${ANDROID_HOME}
+    appendPath ${ANDROID_HOME}/platform-tools
 }
 
 # for GoPath
@@ -72,22 +84,22 @@ if [[ -n ${INSIDE_EMACS} ]]; then
 fi
 
 # Path for RVM
-[[ -d $HOME/.rvm/bin ]] && PATH=${PATH}:$HOME/.rvm/bin # Add RVM to PATH for scripting
+appendPath $HOME/.rvm/bin
 
 # for OS161 CSE 521
 [[ -d ~/root && -d ~/os161 && -d ~/src ]] && {
     alias db="cd ~/root && mips-harvard-os161-gdb kernel"
-    export PATH=${PATH}:~/os161/tools/bin
+    appendPath ~/os161/tools/bin
 }
 
 # Vi Mode
-[[ -s "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh"
+sourceFile "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh"
 
 # for alias
-[[ -s "${ZDOTDIR:-$HOME}/.zshrc_alias.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_alias.zsh"
+sourceFile "${ZDOTDIR:-$HOME}/.zshrc_alias.zsh"
 
 # for AppleScript Alias
-[[ -s "${ZDOTDIR:-$HOME}/.zshrc_scpt_alias.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_scpt_alias.zsh"
+sourceFile "${ZDOTDIR:-$HOME}/.zshrc_scpt_alias.zsh"
 
-# local config
-[[ -s "${ZDOTDIR:-$HOME}/.zshrc_local" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_local"
+# # local config
+sourceFile "${ZDOTDIR:-$HOME}/.zshrc_local"
