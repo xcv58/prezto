@@ -10,19 +10,18 @@ alias o="open -a Preview"
 # Path for Shell script
 function setMacHome() {
     [[ $# != 1 ]] && return;
-    if [[ -d $1 ]]; then
-        local MAC_HOME=$1
-        local MAC_PATH
-        MAC_PATH=(
-            ${MAC_HOME}
-            ${MAC_HOME}/Shell_script
-            ${MAC_HOME}/Shell_script/AppleScript
-            ${MAC_HOME}/OS-161-Scripts
-        )
-        for i in ${MAC_PATH[@]}; do
-            insertPath ${i}
-        done
-    fi
+    [[ -d $1 ]] || return;
+    local MAC_HOME=$1
+    local MAC_PATH
+    MAC_PATH=(
+        ${MAC_HOME}
+        ${MAC_HOME}/Shell_script
+        ${MAC_HOME}/Shell_script/AppleScript
+        ${MAC_HOME}/OS-161-Scripts
+    )
+    for i in ${MAC_PATH[@]}; do
+        insertPath ${i}
+    done
 }
 
 setMacHome ~/Dropbox/MacHome
