@@ -8,16 +8,24 @@ alias o="open -a Preview"
 # alias filetree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 
 # Path for Shell script
-MAC_PATH=(
-    ~/Dropbox/Software/MacHome
-    ~/Dropbox/Software/MacHome/Shell_script
-    ~/Dropbox/Software/MacHome/Shell_script/AppleScript
-    ~/Dropbox/Software/MacHome/OS-161-Scripts
-)
-for i in ${MAC_PATH[@]}
-do
-    insertPath ${i}
-done
+function setMacHome() {
+    [[ $# != 1 ]] && return;
+    if [[ -d $1 ]]; then
+        local MAC_HOME=$1
+        local MAC_PATH
+        MAC_PATH=(
+            ${MAC_HOME}
+            ${MAC_HOME}/Shell_script
+            ${MAC_HOME}/Shell_script/AppleScript
+            ${MAC_HOME}/OS-161-Scripts
+        )
+        for i in ${MAC_PATH[@]}; do
+            insertPath ${i}
+        done
+    fi
+}
+
+setMacHome ~/Dropbox/MacHome
 
 # Path for Emacs
 insertPath /Applications/Emacs.app/Contents/MacOS
