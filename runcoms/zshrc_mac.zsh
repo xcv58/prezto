@@ -30,6 +30,9 @@ setMacHome ~/Dropbox/MacHome
 insertPath /Applications/Emacs.app/Contents/MacOS
 insertPath /Applications/Emacs.app/Contents/MacOS/bin
 
+# Path for depot_tools of Chromium
+insertPath ~/depot_tools
+
 # alias for Emacs in Terminal
 command -v Emacs >/dev/null 2>&1 && alias emacs="Emacs -nw"
 
