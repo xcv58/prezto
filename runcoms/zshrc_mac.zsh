@@ -58,3 +58,5 @@ function jdk() {
 
 # set default JDK to 1.8
 jdk 1.8 > /dev/null
+
+sourceFile "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
