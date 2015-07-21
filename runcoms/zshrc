@@ -86,6 +86,11 @@ fi
 # Path for RVM
 appendPath $HOME/.rvm/bin
 
+# node path
+[[ -d /usr/local/lib/node_modules ]] && {
+    export NODE_PATH=/usr/local/lib/node_modules
+}
+
 # for OS161 CSE 521
 [[ -d ~/root && -d ~/os161 && -d ~/src ]] && {
     alias db="cd ~/root && mips-harvard-os161-gdb kernel"
