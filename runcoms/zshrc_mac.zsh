@@ -36,6 +36,9 @@ command -v Emacs >/dev/null 2>&1 && alias emacs="Emacs -nw"
 # Path for MacVim
 insertPath /Applications/MacVim.app/Contents/MacOS
 
+# Path for Calibre
+insertPath /Applications/calibre.app/Contents/MacOS
+
 # alias vim to Vim for compatible
 command -v Vim >/dev/null 2>&1 && alias vim=Vim
 
