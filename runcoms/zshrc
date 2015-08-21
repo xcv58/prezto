@@ -18,6 +18,12 @@ sourceFile () {
     [[ -s ${*} ]] && source ${*}
 }
 
+exportENV () {
+    [[ -d $2 ]] && {
+        export ${1}=${2}
+    }
+}
+
 # Source Prezto.
 sourceFile "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
@@ -36,7 +42,7 @@ alias ec="emacsclient -n"
 export ALTERNATE_EDITOR="vim"
 
 # Path for  groovy
-[[ -d /usr/local/opt/groovy/libexec ]] && export GROOVY_HOME=/usr/local/opt/groovy/libexec
+exportENV GROOVY_HOME /usr/local/opt/groovy/libexec
 
 # Path for /usr/local/bin
 insertPath /usr/local/bin
@@ -54,8 +60,11 @@ export PATH=${PATH}:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin
     appendPath ${ANDROID_HOME}/platform-tools
 }
 
+# Set Gradle_HOME
+exportENV GRADLE_HOME /usr/local/Cellar/gradle/2.6
+
 # for GoPath
-[[ -d /usr/local/opt/go/libexec/bin ]] && export GOPATH=/usr/local/opt/go/libexec/bin
+exportENV GOPATH /usr/local/opt/go/libexec/bin
 
 # HADOOP related variables and Path
 [[ -d ~/hadoop ]] && {
@@ -87,9 +96,7 @@ fi
 appendPath $HOME/.rvm/bin
 
 # node path
-[[ -d /usr/local/lib/node_modules ]] && {
-    export NODE_PATH=/usr/local/lib/node_modules
-}
+exportENV NODE_PATH /usr/local/lib/node_modules
 
 # for OS161 CSE 521
 [[ -d ~/root && -d ~/os161 && -d ~/src ]] && {
