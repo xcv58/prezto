@@ -24,7 +24,10 @@ function setMacHome() {
     done
 }
 
-setMacHome ~/Dropbox/MacHome
+setMacHome ~/MacHome
+
+# Path for LaTeX
+insertPath /usr/local/texlive/2015/bin/universal-darwin
 
 # Path for Emacs
 insertPath /Applications/Emacs.app/Contents/MacOS
