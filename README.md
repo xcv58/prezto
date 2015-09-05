@@ -22,7 +22,7 @@ version is 4.3.17.
   3. Create a new Zsh configuration by copying the Zsh configuration files
      provided:
 
-        zsh "${ZDOTDIR:-$HOME}/.zprezto/install.zsh"
+        zsh "${ZDOTDIR:-$HOME}/.zprezto/link-dot-files.zsh"
 
   4. Set Zsh as your default shell:
 

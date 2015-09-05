@@ -7,7 +7,5 @@ source ${SCRIPT_PATH}/base.zsh
 TARGET="${HOME}/.zprezto"
 link_dir ${0} ${TARGET}
 
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  echo ln -fs "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-  ln -fs "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-done
+# source ${SCRIPT_PATH}/link-dot-files.zsh
+source "${ZDOTDIR:-$HOME}"/.zprezto/link-dot-files.zsh
