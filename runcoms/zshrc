@@ -60,6 +60,8 @@ export PATH=${PATH}:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin
     appendPath ${ANDROID_HOME}/platform-tools
 }
 
+exportENV ANDROID_NDK_HOME ~/Library/Android/android-ndk
+
 # Set Gradle_HOME
 exportENV GRADLE_HOME /usr/local/Cellar/gradle/2.6
 
