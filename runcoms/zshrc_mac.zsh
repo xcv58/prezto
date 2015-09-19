@@ -57,9 +57,10 @@ function jdk() {
     [[ $# == 0 ]] && select opt in "${JAVA_CANDIDATE[@]}"; do; [[ ${opt} != "" ]] && break; done || opt=$*
     for i in ${JAVA_CANDIDATE[@]}
     do
-        [[ ${i} == *${opt}* ]] && export JAVA_HOME="${JVM_PATH}/${i}/Contents/Home"
+        [[ ${i} == *${opt}* ]] && export JAVA_HOME="${JVM_PATH}/${i}/Contents/Home"; export STUDIO_JDK="${JVM_PATH}/${i}"
     done
     echo "Set JAVA_HOME to ${JAVA_HOME}"
+    echo "Set STUDIO_JDK to ${JAVA_HOME}"
 }
 
 # set default JDK to 1.8
