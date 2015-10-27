@@ -16,8 +16,10 @@ bindkey -M viins "^K" kill-line
 bindkey -M vicmd "^K" kill-line
 bindkey -M viins "^W" backward-kill-word
 bindkey -M vicmd "^W" backward-kill-word
-bindkey -M viins "^P" up-line-or-search
-bindkey -M viins "^N" down-line-or-search
+bindkey -M viins "^P" history-beginning-search-backward
+bindkey -M viins "^N" history-beginning-search-forward
+bindkey -M viins "^[[A" history-beginning-search-backward
+bindkey -M viins "^[[B" history-beginning-search-forward
 bindkey -M viins "^V" edit-command-line
 bindkey -M viins "^L" xcv58-clear-screen
 bindkey -M viins "\e." insert-last-word
