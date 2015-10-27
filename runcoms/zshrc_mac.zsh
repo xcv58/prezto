@@ -68,3 +68,6 @@ jdk 1.7 > /dev/null
 
 sourceFile "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
 sourceFile "/usr/local/opt/autoenv/activate.sh"
+
+function mountAndroid() { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
+function umountAndroid() { hdiutil detach /Volumes/android; }
