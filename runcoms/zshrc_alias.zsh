@@ -42,7 +42,6 @@ command -v adb >/dev/null 2>&1 && {
     alias auninstall="adb uninstall"
     alias apull="adb pull"
     alias areboot="adb reboot"
-    alias aflashall="fastboot flashall -w"
     alias aflash="fastboot flashall"
 }
 
