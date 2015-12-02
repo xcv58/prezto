@@ -50,4 +50,9 @@ command -v meteor >/dev/null 2>&1 && {
     alias m="meteor"
 }
 
+# alias for Python3
+command -v python3 >/dev/null 2>&1 && {
+    alias p3="python3"
+}
+
 [[ -s "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh"
