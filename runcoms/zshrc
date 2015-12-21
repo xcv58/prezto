@@ -24,6 +24,12 @@ exportENV () {
     }
 }
 
+# clear Docker container by name
+clearContainer() {
+    docker ps -q --filter "name=${1}" | xargs -n 1 docker stop
+    docker ps -a -q --filter "name=${1}" | xargs -n 1 docker rm
+}
+
 # Source Prezto.
 sourceFile "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
@@ -41,7 +47,7 @@ alias ec="emacsclient -n"
 
 export ALTERNATE_EDITOR="vim"
 
-# Path for  groovy
+# Path for groovy
 exportENV GROOVY_HOME /usr/local/opt/groovy/libexec
 
 # Path for /usr/local/bin
