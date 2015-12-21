@@ -54,7 +54,7 @@ exportENV GROOVY_HOME /usr/local/opt/groovy/libexec
 insertPath /usr/local/bin
 
 # Path for go lib
-insertPath /usr/local/opt/go/libexec/bin/bin/gcli
+insertPath /usr/local/opt/go/libexec/bin/bin
 
 # add current directory to PATH
 export PATH=.:${PATH}
