@@ -1,7 +1,14 @@
 alias l="ls -lh"
-alias lsg="ls | grep "
-alias lslg="ls -a | grep "
-alias lg="ls -lh | grep "
+
+command -v ag >/dev/null 2>&1 && {
+    alias lsg="ls | ag "
+    alias lslg="ls -a | ag "
+    alias lg="ls -lh | ag "
+} || {
+    alias lsg="ls | grep "
+    alias lslg="ls -a | grep "
+    alias lg="ls -lh | grep "
+}
 
 # remove rm -i to avoid useless confirm.
 alias rm="nocorrect rm"
