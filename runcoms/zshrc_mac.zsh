@@ -33,6 +33,9 @@ insertPath /usr/local/texlive/2015/bin/universal-darwin
 insertPath /Applications/Emacs.app/Contents/MacOS
 insertPath /Applications/Emacs.app/Contents/MacOS/bin
 
+# alias atom-beta to atom
+command -v atom-beta >/dev/null 2>&1 && alias atom="atom-beta"
+
 # alias for Emacs in Terminal
 command -v Emacs >/dev/null 2>&1 && alias emacs="Emacs -nw"
 
