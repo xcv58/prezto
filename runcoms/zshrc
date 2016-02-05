@@ -30,6 +30,11 @@ clearContainer() {
     docker ps -a -q --filter "name=${1}" | xargs -n 1 docker rm
 }
 
+# TODO: need check whether is has 256color support
+if [[ "$TERM" == "xterm" ]]; then
+    export TERM=xterm-256color
+fi
+
 # Source Prezto.
 sourceFile "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
@@ -132,7 +137,3 @@ sourceFile "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"
 
 # The next line enables shell command completion for gcloud.
 sourceFile "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
-
-if [ "$TERM" == "xterm" ]; then
-    export TERM=xterm-256color
-fi
