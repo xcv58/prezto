@@ -137,3 +137,6 @@ sourceFile "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"
 
 # The next line enables shell command completion for gcloud.
 sourceFile "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
+
+# Go Version Manager
+sourceFile "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
