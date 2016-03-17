@@ -79,9 +79,6 @@ exportENV ANDROID_NDK_HOME ~/Library/Android/android-ndk
 # Set Gradle_HOME
 exportENV GRADLE_HOME /usr/local/Cellar/gradle/2.6
 
-# for GoPath
-exportENV GOPATH /usr/local/opt/go/libexec/bin
-
 # HADOOP related variables and Path
 [[ -d ~/hadoop ]] && {
     export HADOOP_INSTALL=~/hadoop
@@ -140,3 +137,6 @@ sourceFile "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
 
 # Go Version Manager
 sourceFile "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
+
+export NVM_DIR="/usr/local/opt/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
