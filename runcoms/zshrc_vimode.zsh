@@ -52,7 +52,11 @@ zle -N xcv58-clear-screen
 
 prepare_first_line () {
     print ""
-    print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f in ${_prompt_xcv58_colors[5]}%~%f "'${vcs_info_msg_0_}'
+    local remote_string=""
+    if [[ ${SSH_CLIENT} ]] then
+        remote_string=" ${_prompt_xcv58_colors[1]}SSH%f"
+    fi
+    print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f${remote_string} in ${_prompt_xcv58_colors[5]}%~%f ${vcs_info_msg_0_}"
 }
 
 vi_mode_indicator () {
@@ -66,7 +70,7 @@ vi_mode_indicator () {
 function zle-line-init zle-keymap-select {
     VIM_PROMPT="$(vi_mode_indicator)"
     PS1="${VIM_PROMPT}\$ "
-    RPS1=${xcv58_time}
+    RPS1="${xcv58_time}"
     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}  $EPS1${RPS1}"
     zle reset-prompt
 }
