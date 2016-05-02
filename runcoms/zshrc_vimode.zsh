@@ -52,9 +52,7 @@ zle -N xcv58-clear-screen
 
 prepare_first_line () {
     local remote_string="in"
-    if [[ ${SSH_CLIENT} ]] then
-        remote_string="${_prompt_xcv58_colors[1]}SSH%f"
-    fi
+    [ -z ${SSH_CLIENT} ] || remote_string="${_prompt_xcv58_colors[1]}SSH%f"
     print ""
     print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f ${remote_string} ${_prompt_xcv58_colors[5]}%~%f ${vcs_info_msg_0_}"
 }
