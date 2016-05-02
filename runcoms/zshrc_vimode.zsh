@@ -51,12 +51,12 @@ function xcv58-clear-screen () {
 zle -N xcv58-clear-screen
 
 prepare_first_line () {
-    print ""
-    local remote_string=""
+    local remote_string="in"
     if [[ ${SSH_CLIENT} ]] then
-        remote_string=" ${_prompt_xcv58_colors[1]}SSH%f"
+        remote_string="${_prompt_xcv58_colors[1]}SSH%f"
     fi
-    print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f${remote_string} in ${_prompt_xcv58_colors[5]}%~%f ${vcs_info_msg_0_}"
+    print ""
+    print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f ${remote_string} ${_prompt_xcv58_colors[5]}%~%f ${vcs_info_msg_0_}"
 }
 
 vi_mode_indicator () {
