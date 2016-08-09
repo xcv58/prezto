@@ -7,6 +7,8 @@ alias o="open -a Preview"
 # filetree, don't need because brew install tree
 # alias filetree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 
+exportENV VIMRUNTIME /Applications/MacVim.app/Contents/Resources/vim/runtime
+
 # Path for Shell script
 function setMacHome() {
     [[ $# != 1 ]] && return;
