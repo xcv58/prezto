@@ -35,6 +35,13 @@ insertPath /usr/local/texlive/2015/bin/universal-darwin
 insertPath /Applications/Emacs.app/Contents/MacOS
 insertPath /Applications/Emacs.app/Contents/MacOS/bin
 
+export PATH="/opt/twitter/bin:/opt/twitter/sbin:/usr/local/mysql/bin:${HOME}/bin":$PATH
+insertPath /opt/twitter_mde/homebrew/mde_bin
+insertPath /opt/twitter_mde/bin
+
+## rvm
+[[ -s "/opt/twitter/rvm/scripts/rvm" ]] && source "/opt/twitter/rvm/scripts/rvm"
+
 # alias atom-beta to atom
 command -v atom-beta >/dev/null 2>&1 && alias atom="atom-beta"
 
