@@ -13,6 +13,41 @@
 #   http://i.imgur.com/aTlTsfZ.png
 #
 
+
+### check-for-changes disable in some places ####################################
+#
+# Special thanks to Johan Sundström https://github.com/johan. Inspired by Johan
+# Sundström's https://github.com/johan/zsh/blob/master/Misc/vcs_info-examples#L70
+#
+# Some backends (git and mercurial at the time of writing) can tell you
+# whether there are local changes in the current repository. While that's
+# nice, the actions needed to obtain the information can be potentially
+# expensive. So if you're working on something the size of the linux kernel
+# or some corporate code monstrosity you may want to think twice about
+# enabling the `check-for-changes' style unconditionally.
+#
+# Zsh's zstyle configuration system let's you do some magic to enable styles
+# only depending on some code you're running.
+#
+# So, what I'm doing is this: I put larger repo path to a local array.
+# Everytime zsh enter into a directory. It first check whether current directory
+# is under one of the larger repo array. If yes, just disable the check-for-changes
+# functionality. Otherwise running in normal.
+
+function is-check-for-changes-ok() {
+  local d
+  local -a larger_repo_dirs
+
+  larger_repo_dirs=(
+    "${HOME}/workspace/source"
+  )
+
+  for d in ${larger_repo_dirs}; do
+    [[ ${PWD} == ${d}* ]] && return 1
+  done
+  return 0
+}
+
 function prompt_xcv58_precmd {
   # # Check for untracked files or updated submodules since vcs_info does not.
   # if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
@@ -76,7 +111,7 @@ function prompt_xcv58_setup {
 
   # Set vcs_info parameters.
   zstyle ':vcs_info:*' enable bzr git hg svn
-  zstyle ':vcs_info:*:prompt:*' check-for-changes true
+  zstyle -e ':vcs_info:*:prompt:*' check-for-changes 'is-check-for-changes-ok && reply=true || reply=false'
   zstyle ':vcs_info:*:prompt:*' unstagedstr "${unstaged_format}"
   zstyle ':vcs_info:*:prompt:*' stagedstr "${staged_format}"
   zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${action_format}"
@@ -84,7 +119,7 @@ function prompt_xcv58_setup {
   zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
   # Disable ~/workspace/source
-  zstyle ':vcs_info:*' disable-patterns "$HOME/workspace/source(|/*)"
+  # zstyle ':vcs_info:*' disable-patterns "$HOME/workspace/source(|/*)"
 
   # Set python-info parameters.
   zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
