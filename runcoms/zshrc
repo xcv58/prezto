@@ -41,13 +41,13 @@ sourceFile "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 # Customize to your needs...
 
 # for autojump
-function j() {
+function load_autojump() {
     (( $+commands[brew] )) && {
         [[ `uname` == "Linux" && -f /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
         [[ `uname` == "Darwin" && -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && source $(brew --prefix)/etc/profile.d/autojump.sh
-        j "$@"
     }
 }
+lazy_load load_autojump j
 
 # for Mac OS only
 [[ `uname` == "Darwin" ]] && sourceFile "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
