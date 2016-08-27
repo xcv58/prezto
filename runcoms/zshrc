@@ -49,9 +49,6 @@ function load_autojump() {
 }
 lazy_load load_autojump j
 
-# for Mac OS only
-[[ `uname` == "Darwin" ]] && sourceFile "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
-
 # for Emacs and EmacsClient
 alias ec="emacsclient -n"
 
@@ -142,3 +139,6 @@ sourceFile "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
 
 # Go Version Manager
 sourceFile "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
+
+# for Mac OS only
+[[ `uname` == "Darwin" ]] && sourceFile "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"

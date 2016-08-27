@@ -35,10 +35,6 @@ insertPath /usr/local/texlive/2015/bin/universal-darwin
 insertPath /Applications/Emacs.app/Contents/MacOS
 insertPath /Applications/Emacs.app/Contents/MacOS/bin
 
-export PATH="/opt/twitter/bin:/opt/twitter/sbin:/usr/local/mysql/bin:${HOME}/bin":$PATH
-insertPath /opt/twitter_mde/homebrew/mde_bin
-insertPath /opt/twitter_mde/bin
-
 ## rvm
 [[ -s "/opt/twitter/rvm/scripts/rvm" ]] && source "/opt/twitter/rvm/scripts/rvm"
 
@@ -83,3 +79,10 @@ sourceFile "/usr/local/opt/autoenv/activate.sh"
 
 function mountAndroid() { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
 function umountAndroid() { hdiutil detach /Volumes/android; }
+
+# PATH for twitter
+insertPath /opt/twitter_mde/sbin
+insertPath /usr/local/mysql/bin
+insertPath "${HOME}/bin"
+insertPath /opt/twitter_mde/homebrew/mde_bin
+insertPath /opt/twitter_mde/bin
