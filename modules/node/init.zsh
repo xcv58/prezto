@@ -35,4 +35,4 @@ function load_nvm() {
     fi
 }
 
-lazy_load load_nvm npm node nvm
+lazy_load load_nvm npm node nvm newman
