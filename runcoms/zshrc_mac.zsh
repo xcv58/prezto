@@ -79,10 +79,3 @@ sourceFile "/usr/local/opt/autoenv/activate.sh"
 
 function mountAndroid() { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
 function umountAndroid() { hdiutil detach /Volumes/android; }
-
-# PATH for twitter
-insertPath /opt/twitter_mde/sbin
-insertPath /usr/local/mysql/bin
-insertPath "${HOME}/bin"
-insertPath /opt/twitter_mde/homebrew/mde_bin
-insertPath /opt/twitter_mde/bin

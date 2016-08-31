@@ -4,6 +4,7 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #   Zeh Rizzatti <zehrizzatti@gmail.com>
+#   xcv58 <i@xcv58.com>
 #
 
 # Load manually installed NVM into the shell session.
