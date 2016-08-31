@@ -22,7 +22,7 @@ function load_nvm() {
 
     # Load NPM completion.
     if (( $+commands[npm] )); then
-        cache_file="${0:h}/cache.zsh"
+        cache_file="/usr/local/etc/bash_completion.d/npm"
 
         if [[ "$commands[npm]" -nt "$cache_file" || ! -s "$cache_file" ]]; then
             # npm is slow; cache its output.
