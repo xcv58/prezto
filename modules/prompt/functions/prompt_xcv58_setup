@@ -35,99 +35,120 @@
 # functionality. Otherwise running in normal.
 
 function is-check-for-changes-ok() {
-  local d
-  local -a larger_repo_dirs
+    local d
+    local -a larger_repo_dirs
 
-  larger_repo_dirs=(
+    larger_repo_dirs=(
     "${HOME}/workspace/source"
-  )
+    )
 
-  for d in ${larger_repo_dirs}; do
-    [[ ${PWD} == ${d}* ]] && return 1
-  done
-  return 0
+    for d in ${larger_repo_dirs}; do
+        [[ ${PWD} == ${d}* ]] && return 1
+    done
+    return 0
+}
+
+function insert-first-word () {
+    zle insert-last-word -- -1 1 -
+}
+
+function xcv58-clear-screen () {
+    clear
+    zle reset-prompt
+}
+
+zle -N insert-first-word
+zle -N xcv58-clear-screen
+
+function get_xcv58_PROMPT {
+    local remote_string="in"
+    [ -z ${SSH_CLIENT} ] || remote_string="${_prompt_xcv58_colors[1]}SSH%f"
+    print ''
+    print -rP "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f ${remote_string} ${_prompt_xcv58_colors[5]}%~%f ${vcs_info_msg_0_}"
+    print '$ '
 }
 
 function prompt_xcv58_precmd {
-  # # Check for untracked files or updated submodules since vcs_info does not.
-  # if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-  #   branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c${_prompt_xcv58_colors[4]}●%f)"
-  # else
-  #   branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c)"
-  # fi
-  local name=$(git config user.name)
-  local email=$(git config user.email)
-  branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c) ${_prompt_xcv58_colors[3]}${name} <${email}>%f"
+    # # Check for untracked files or updated submodules since vcs_info does not.
+    # if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+    #   branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c${_prompt_xcv58_colors[4]}●%f)"
+    # else
+    #   branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c)"
+    # fi
+    local name=$(git config user.name)
+    local email=$(git config user.email)
+    branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c) ${_prompt_xcv58_colors[3]}${name} <${email}>%f"
 
-  zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
+    zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
 
-  vcs_info 'prompt'
+    vcs_info 'prompt'
 
-  if (( $+functions[python-info] )); then
-    python-info
-  fi
+    if (( $+functions[python-info] )); then
+        python-info
+    fi
 }
 
 function prompt_xcv58_setup {
-  setopt LOCAL_OPTIONS
-  unsetopt XTRACE KSH_ARRAYS
-  prompt_opts=(cr percent subst)
+    setopt LOCAL_OPTIONS
+    unsetopt XTRACE KSH_ARRAYS
+    prompt_opts=(cr percent subst)
 
-  # Load required functions.
-  autoload -Uz add-zsh-hook
-  autoload -Uz vcs_info
+    # Load required functions.
+    autoload -Uz add-zsh-hook
+    autoload -Uz vcs_info
 
-  # Add hook for calling vcs_info before each command.
-  add-zsh-hook precmd prompt_xcv58_precmd
+    # Add hook for calling vcs_info before each command.
+    add-zsh-hook precmd prompt_xcv58_precmd
 
-  # Use extended color pallete if available.
-  if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
-    _prompt_xcv58_colors=(
-      "%F{81}"  # Turquoise
-      "%F{166}" # Orange
-      "%F{135}" # Purple
-      "%F{161}" # Hotpink
-      "%F{118}" # Limegreen
-    )
-  else
-    _prompt_xcv58_colors=(
-      "%F{cyan}"
-      "%F{yellow}"
-      "%F{magenta}"
-      "%F{red}"
-      "%F{green}"
-    )
-  fi
+    # Use extended color pallete if available.
+    if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
+        _prompt_xcv58_colors=(
+        "%F{81}"  # Turquoise
+        "%F{166}" # Orange
+        "%F{135}" # Purple
+        "%F{161}" # Hotpink
+        "%F{118}" # Limegreen
+        )
+    else
+        _prompt_xcv58_colors=(
+        "%F{cyan}"
+        "%F{yellow}"
+        "%F{magenta}"
+        "%F{red}"
+        "%F{green}"
+        )
+    fi
 
-  # Formats:
-  #   %b - branchname
-  #   %u - unstagedstr (see below)
-  #   %c - stagedstr (see below)
-  #   %a - action (e.g. rebase-i)
-  #   %R - repository path
-  #   %S - path in the repository
-  local branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c)"
-  local action_format="(${_prompt_xcv58_colors[5]}%a%f)"
-  local unstaged_format="${_prompt_xcv58_colors[2]}●%f"
-  local staged_format="${_prompt_xcv58_colors[5]}●%f"
+    # Formats:
+    #   %b - branchname
+    #   %u - unstagedstr (see below)
+    #   %c - stagedstr (see below)
+    #   %a - action (e.g. rebase-i)
+    #   %R - repository path
+    #   %S - path in the repository
+    local branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c)"
+    local action_format="(${_prompt_xcv58_colors[5]}%a%f)"
+    local unstaged_format="${_prompt_xcv58_colors[2]}●%f"
+    local staged_format="${_prompt_xcv58_colors[5]}●%f"
 
-  # Set vcs_info parameters.
-  zstyle ':vcs_info:*' enable bzr git hg svn
-  zstyle -e ':vcs_info:*:prompt:*' check-for-changes 'is-check-for-changes-ok && reply=true || reply=false'
-  zstyle ':vcs_info:*:prompt:*' unstagedstr "${unstaged_format}"
-  zstyle ':vcs_info:*:prompt:*' stagedstr "${staged_format}"
-  zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${action_format}"
-  zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
-  zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
+    # Set editor-info parameters.
+    zstyle ':prezto:module:editor:info:completing' format '%F{green}...%f'
+    zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{red}--- COMMAND --- %f'
 
-  # Disable ~/workspace/source
-  # zstyle ':vcs_info:*' disable-patterns "$HOME/workspace/source(|/*)"
+    # Set vcs_info parameters.
+    zstyle ':vcs_info:*' enable bzr git hg svn
+    zstyle -e ':vcs_info:*:prompt:*' check-for-changes 'is-check-for-changes-ok && reply=true || reply=false'
+    zstyle ':vcs_info:*:prompt:*' unstagedstr "${unstaged_format}"
+    zstyle ':vcs_info:*:prompt:*' stagedstr "${staged_format}"
+    zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${action_format}"
+    zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
+    zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
-  # Set python-info parameters.
-  zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
-  xcv58_time='%D{%m-%d %H:%M:%S}'
-  PS1="\$ "
-  RPS1=${xcv58_time}
+    # Set python-info parameters.
+    zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
+    xcv58_time='%D{%m-%d %H:%M:%S}'
+    PROMPT='$(get_xcv58_PROMPT)'
+    RPROMPT='${editor_info[keymap]}${xcv58_time}'
 }
 
 prompt_xcv58_setup "$@"
