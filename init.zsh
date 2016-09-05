@@ -17,6 +17,19 @@ if ! autoload -Uz is-at-least || ! is-at-least "$min_zsh_version"; then
 fi
 unset min_zsh_version
 
+# check symbol exists
+function exists() {
+  whence -w $1 >/dev/null
+}
+
+# check whether a function exists
+function fn_exists() {
+  local name=${1}
+  local type_str=`whence -w ${name}`
+  local type="${type_str/${name}: /}"
+  [[ "${type}" == "function" ]] && return 0 || return 1
+}
+
 #
 # Module Loader
 #

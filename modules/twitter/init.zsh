@@ -5,10 +5,6 @@
 #   xcv58 <i@xcv58.com>
 #
 
-function exists() {
-  whence -w $1 >/dev/null
-}
-
 function is_twitter_source() {
   local d
   local -a larger_repo_dirs
@@ -24,7 +20,7 @@ function is_twitter_source() {
 }
 
 function enter_twitter_source() {
-  alias git="/opt/twitter_mde/bin/git"
+  [[ -s "/opt/twitter_mde/bin/git" ]] && alias git="/opt/twitter_mde/bin/git"
 }
 
 function leave_twitter_source() {
@@ -41,4 +37,3 @@ insertPath /usr/local/mysql/bin
 insertPath "${HOME}/bin"
 insertPath /opt/twitter_mde/homebrew/mde_bin
 insertPath /opt/twitter_mde/bin
-
