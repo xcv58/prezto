@@ -35,17 +35,9 @@
 # functionality. Otherwise running in normal.
 
 function is-check-for-changes-ok() {
-    local d
-    local -a larger_repo_dirs
-
-    larger_repo_dirs=(
-    "${HOME}/workspace/source"
-    )
-
-    for d in ${larger_repo_dirs}; do
-        [[ ${PWD} == ${d}* ]] && return 1
-    done
-    return 0
+    if [[ fn_exists("is_twitter_source") != 0 ]]; then
+        is_twitter_source && return 1 || return 0
+    fi
 }
 
 function insert-first-word () {
