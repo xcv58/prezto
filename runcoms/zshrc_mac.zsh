@@ -39,7 +39,7 @@ insertPath /Applications/Emacs.app/Contents/MacOS/bin
 [[ -s "/opt/twitter/rvm/scripts/rvm" ]] && source "/opt/twitter/rvm/scripts/rvm"
 
 # alias atom-beta to atom
-command -v atom-beta >/dev/null 2>&1 && alias atom="atom-beta"
+# command -v atom-beta >/dev/null 2>&1 && alias atom="atom-beta"
 
 # alias for Emacs in Terminal
 command -v Emacs >/dev/null 2>&1 && alias emacs="Emacs -nw"
