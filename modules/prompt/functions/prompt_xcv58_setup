@@ -136,7 +136,7 @@ function prompt_xcv58_setup {
     local action_format="(${_prompt_xcv58_colors[5]}%a%f)"
     local unstaged_format="${_prompt_xcv58_colors[2]}!%f"
     local staged_format="${_prompt_xcv58_colors[5]}✓%f"
-    untracked_format="${_prompt_xcv58_colors[4]} ?%f"
+    untracked_format="${_prompt_xcv58_colors[4]}?%f"
     uncheck_format="${_prompt_xcv58_colors[4]}✘%f"
 
     # Set editor-info parameters.
