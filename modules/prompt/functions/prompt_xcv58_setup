@@ -35,8 +35,8 @@
 # functionality. Otherwise running in normal.
 
 function is-check-for-changes-ok() {
-    if [[ fn_exists("is_twitter_source") != 0 ]]; then
-        is_twitter_source && return 1 || return 0
+    if [[ fn_exists("is_twitter_source") == 0 ]]; then
+      is_twitter_source && return 1 || return 0
     fi
 }
 
