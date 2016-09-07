@@ -35,7 +35,7 @@
 # functionality. Otherwise running in normal.
 
 function is-check-for-changes-ok() {
-    if [[ fn_exists("is_twitter_source") == 0 ]]; then
+    if [[ fn_exists(is_twitter_source) != 0 ]]; then
       is_twitter_source && return 1 || return 0
     fi
 }
@@ -60,6 +60,12 @@ function get_xcv58_PROMPT {
     echo '$ '
 }
 
+function check_untracked_files () {
+    if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+        branch_format="${branch_format}${untracked_format}"
+    fi
+}
+
 function prompt_xcv58_precmd {
     # # Check for untracked files or updated submodules since vcs_info does not.
     # if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
@@ -69,7 +75,11 @@ function prompt_xcv58_precmd {
     # fi
     local name=$(git config user.name)
     local email=$(git config user.email)
-    branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c) ${_prompt_xcv58_colors[3]}${name} <${email}>%f"
+
+    branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c"
+    is_twitter_source || check_untracked_files
+    branch_format="${branch_format})"
+    branch_format="${branch_format} ${_prompt_xcv58_colors[3]}${name} <${email}>%f"
 
     zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
 
@@ -122,6 +132,7 @@ function prompt_xcv58_setup {
     local action_format="(${_prompt_xcv58_colors[5]}%a%f)"
     local unstaged_format="${_prompt_xcv58_colors[2]}●%f"
     local staged_format="${_prompt_xcv58_colors[5]}●%f"
+    untracked_format="${_prompt_xcv58_colors[4]}●%f"
 
     # Set editor-info parameters.
     zstyle ':prezto:module:editor:info:completing' format '%F{green}...%f'
