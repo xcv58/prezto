@@ -66,6 +66,10 @@ function check_untracked_files () {
     fi
 }
 
+function append_uncheck_symbol () {
+    branch_format="${branch_format}${uncheck_format}"
+}
+
 function prompt_xcv58_precmd {
     # # Check for untracked files or updated submodules since vcs_info does not.
     # if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
@@ -77,7 +81,7 @@ function prompt_xcv58_precmd {
     local email=$(git config user.email)
 
     branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c"
-    is_twitter_source || check_untracked_files
+    is_twitter_source && append_uncheck_symbol || check_untracked_files
     branch_format="${branch_format})"
     branch_format="${branch_format} ${_prompt_xcv58_colors[3]}${name} <${email}>%f"
 
@@ -131,8 +135,9 @@ function prompt_xcv58_setup {
     local branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c)"
     local action_format="(${_prompt_xcv58_colors[5]}%a%f)"
     local unstaged_format="${_prompt_xcv58_colors[2]}!%f"
-    local staged_format="${_prompt_xcv58_colors[5]}✓ %f"
-    untracked_format="${_prompt_xcv58_colors[4]}?%f"
+    local staged_format="${_prompt_xcv58_colors[5]}✓%f"
+    untracked_format="${_prompt_xcv58_colors[4]} ?%f"
+    uncheck_format="${_prompt_xcv58_colors[4]}✘%f"
 
     # Set editor-info parameters.
     zstyle ':prezto:module:editor:info:completing' format '%F{green}...%f'
