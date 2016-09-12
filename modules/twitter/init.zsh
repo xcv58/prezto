@@ -20,11 +20,11 @@ function is_twitter_source() {
 }
 
 function enter_twitter_source() {
-  [[ -s "/opt/twitter_mde/bin/git" ]] && alias git="/opt/twitter_mde/bin/git"
+  load_twitter_path
 }
 
 function leave_twitter_source() {
-  unalias git 2>/dev/null
+  remove_twitter_path
 }
 
 function chpwd() {
@@ -32,8 +32,22 @@ function chpwd() {
 }
 
 # PATH for twitter
-insertPath /opt/twitter_mde/sbin
-insertPath /usr/local/mysql/bin
-insertPath "${HOME}/bin"
-insertPath /opt/twitter_mde/homebrew/mde_bin
-insertPath /opt/twitter_mde/bin
+TWITTER_PATH=(
+"${HOME}/bin"
+/usr/local/mysql/bin
+/opt/twitter_mde/homebrew/mde_bin
+/opt/twitter_mde/sbin
+/opt/twitter_mde/bin
+)
+
+function load_twitter_path() {
+  for p in ${TWITTER_PATH}; do
+    insert_path ${p}
+  done
+}
+
+function remove_twitter_path() {
+  for p in ${TWITTER_PATH}; do
+    remove_path ${p}
+  done
+}
