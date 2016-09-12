@@ -22,18 +22,18 @@ function setMacHome() {
         ${MAC_HOME}/OS-161-Scripts
     )
     for i in ${MAC_PATH[@]}; do
-        insertPath ${i}
+        insert_path ${i}
     done
 }
 
 setMacHome ~/MacHome
 
 # Path for LaTeX
-insertPath /usr/local/texlive/2015/bin/universal-darwin
+insert_path /usr/local/texlive/2015/bin/universal-darwin
 
 # Path for Emacs
-insertPath /Applications/Emacs.app/Contents/MacOS
-insertPath /Applications/Emacs.app/Contents/MacOS/bin
+insert_path /Applications/Emacs.app/Contents/MacOS
+insert_path /Applications/Emacs.app/Contents/MacOS/bin
 
 ## rvm
 [[ -s "/opt/twitter/rvm/scripts/rvm" ]] && source "/opt/twitter/rvm/scripts/rvm"
@@ -45,16 +45,16 @@ insertPath /Applications/Emacs.app/Contents/MacOS/bin
 command -v Emacs >/dev/null 2>&1 && alias emacs="Emacs -nw"
 
 # Path for MacVim
-insertPath /Applications/MacVim.app/Contents/MacOS
+insert_path /Applications/MacVim.app/Contents/MacOS
 
 # Path for Calibre
-insertPath /Applications/calibre.app/Contents/MacOS
+insert_path /Applications/calibre.app/Contents/MacOS
 
 # alias vim to Vim for compatible
 command -v Vim >/dev/null 2>&1 && alias vim=Vim
 
 # Path for Matlab
-insertPath /Applications/MATLAB_R2014b.app/bin
+insert_path /Applications/MATLAB_R2014b.app/bin
 
 # Set JAVA_HOME, this is Mac OS only
 # for Ubuntu please use sudo update-alternatives --config java
@@ -74,8 +74,8 @@ function jdk() {
 # set default JDK to 1.8
 jdk 1.7 > /dev/null
 
-sourceFile "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
-sourceFile "/usr/local/opt/autoenv/activate.sh"
+source_file "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
+source_file "/usr/local/opt/autoenv/activate.sh"
 
 function mountAndroid() { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
 function umountAndroid() { hdiutil detach /Volumes/android; }

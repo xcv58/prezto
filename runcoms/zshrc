@@ -6,26 +6,32 @@
 #   xcv58 <i@xcv58.com>
 #
 
-insertPath () {
+function remove_path ()  {
+  export PATH=`echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//'`;
+}
+
+function insert_path () {
+    remove_path ${*}
     [[ -d ${*} ]] && export PATH=${*}:${PATH}
 }
 
-appendPath () {
+function append_path () {
+    remove_path ${*}
     [[ -d ${*} ]] && export PATH=${PATH}:${*}
 }
 
-sourceFile () {
+function source_file () {
     [[ -s ${*} ]] && source ${*}
 }
 
-exportENV () {
+function exportENV () {
     [[ -d $2 ]] && {
         export ${1}=${2}
     }
 }
 
 # clear Docker container by name
-clearContainer() {
+function clearContainer() {
     docker ps -q --filter "name=${1}" | xargs -n 1 docker stop
     docker ps -a -q --filter "name=${1}" | xargs -n 1 docker rm
 }
@@ -36,7 +42,7 @@ if [[ "$TERM" == "xterm" ]]; then
 fi
 
 # Source Prezto.
-sourceFile "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+source_file "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
 # Customize to your needs...
 
@@ -58,10 +64,10 @@ export ALTERNATE_EDITOR="vim"
 exportENV GROOVY_HOME /usr/local/opt/groovy/libexec
 
 # Path for /usr/local/bin
-insertPath /usr/local/bin
+insert_path /usr/local/bin
 
 # Path for go lib
-insertPath /usr/local/opt/go/libexec/bin/bin
+insert_path /usr/local/opt/go/libexec/bin/bin
 
 # add current directory to PATH
 export PATH=.:${PATH}
@@ -72,8 +78,8 @@ export PATH=${PATH}:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin
 # Path for Android
 [[ -d ~/SDK-Android ]] && {
     export ANDROID_HOME=~/SDK-Android
-    appendPath ${ANDROID_HOME}
-    appendPath ${ANDROID_HOME}/platform-tools
+    append_path ${ANDROID_HOME}
+    append_path ${ANDROID_HOME}/platform-tools
 }
 
 exportENV ANDROID_NDK_HOME ~/Library/Android/android-ndk
@@ -108,7 +114,7 @@ if [[ -n ${INSIDE_EMACS} ]]; then
 fi
 
 # Path for RVM
-appendPath $HOME/.rvm/bin
+append_path $HOME/.rvm/bin
 
 # node path
 exportENV NODE_PATH /usr/local/lib/node_modules
@@ -116,29 +122,29 @@ exportENV NODE_PATH /usr/local/lib/node_modules
 # for OS161 CSE 521
 [[ -d ~/root && -d ~/os161 && -d ~/src ]] && {
     alias db="cd ~/root && mips-harvard-os161-gdb kernel"
-    appendPath ~/os161/tools/bin
+    append_path ~/os161/tools/bin
 }
 
 # Vi Mode
-sourceFile "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh"
+source_file "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh"
 
 # for alias
-sourceFile "${ZDOTDIR:-$HOME}/.zshrc_alias.zsh"
+source_file "${ZDOTDIR:-$HOME}/.zshrc_alias.zsh"
 
 # for AppleScript Alias
-sourceFile "${ZDOTDIR:-$HOME}/.zshrc_scpt_alias.zsh"
+source_file "${ZDOTDIR:-$HOME}/.zshrc_scpt_alias.zsh"
 
 # # local config
-sourceFile "${ZDOTDIR:-$HOME}/.zshrc_local"
+source_file "${ZDOTDIR:-$HOME}/.zshrc_local"
 
 # The next line updates PATH for the Google Cloud SDK.
-sourceFile "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"
+source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"
 
 # The next line enables shell command completion for gcloud.
-sourceFile "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
+source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
 
 # Go Version Manager
-sourceFile "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
+source_file "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
 
 # for Mac OS only
-[[ `uname` == "Darwin" ]] && sourceFile "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
+[[ `uname` == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
