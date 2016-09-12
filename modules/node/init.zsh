@@ -36,4 +36,4 @@ function load_nvm() {
     fi
 }
 
-lazy_load load_nvm npm node nvm newman gulp
+lazy_load load_nvm nvm
