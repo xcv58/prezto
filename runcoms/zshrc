@@ -7,38 +7,41 @@
 #
 
 function remove_path ()  {
-  export PATH=`echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//'`;
+  # shellcheck disable=SC2155
+  # shellcheck disable=SC2086
+  export PATH=$(echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//');
 }
 
 function insert_path () {
-    remove_path ${*}
-    [[ -d ${*} ]] && export PATH=${*}:${PATH}
+  remove_path "${*}"
+  [[ -d "${*}" ]] && export PATH=${*}:${PATH}
 }
 
 function append_path () {
-    remove_path ${*}
-    [[ -d ${*} ]] && export PATH=${PATH}:${*}
+  remove_path "${*}"
+  [[ -d "${*}" ]] && export PATH=${PATH}:${*}
 }
 
-function source_file () {
-    [[ -s ${*} ]] && source ${*}
+function source_file() {
+  # shellcheck disable=SC1090
+  [[ -s "${*}" ]] && source "${*}"
 }
 
-function exportENV () {
-    [[ -d $2 ]] && {
-        export ${1}=${2}
-    }
+function exportENV() {
+  [[ -d $2 ]] && {
+    export ${1}=${2}
+  }
 }
 
 # clear Docker container by name
 function clearContainer() {
-    docker ps -q --filter "name=${1}" | xargs -n 1 docker stop
-    docker ps -a -q --filter "name=${1}" | xargs -n 1 docker rm
+  docker ps -q --filter "name=${1}" | xargs -n 1 docker stop
+  docker ps -a -q --filter "name=${1}" | xargs -n 1 docker rm
 }
 
 # TODO: need check whether is has 256color support
 if [[ "$TERM" == "xterm" ]]; then
-    export TERM=xterm-256color
+  export TERM=xterm-256color
 fi
 
 # Source Prezto.
@@ -48,10 +51,13 @@ source_file "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
 # for autojump
 function load_autojump() {
-    (( $+commands[brew] )) && {
-        [[ `uname` == "Linux" && -f /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
-        [[ `uname` == "Darwin" && -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && source $(brew --prefix)/etc/profile.d/autojump.sh
-    }
+  # shellcheck disable=SC2154
+  (( $+commands[brew] )) && {
+    # shellcheck disable=SC1091
+    [[ $(uname) == "Linux" && -f /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
+    # shellcheck disable=SC1090
+    [[ $(uname) == "Darwin" && -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && source "$(brew --prefix)/etc/profile.d/autojump.sh"
+  }
 }
 lazy_load load_autojump j
 
@@ -77,9 +83,9 @@ export PATH=${PATH}:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin
 
 # Path for Android
 [[ -d ~/SDK-Android ]] && {
-    export ANDROID_HOME=~/SDK-Android
-    append_path ${ANDROID_HOME}
-    append_path ${ANDROID_HOME}/platform-tools
+  export ANDROID_HOME=~/SDK-Android
+  append_path ${ANDROID_HOME}
+  append_path ${ANDROID_HOME}/platform-tools
 }
 
 exportENV ANDROID_NDK_HOME ~/Library/Android/android-ndk
@@ -89,13 +95,13 @@ exportENV GRADLE_HOME /usr/local/Cellar/gradle/2.6
 
 # HADOOP related variables and Path
 [[ -d ~/hadoop ]] && {
-    export HADOOP_INSTALL=~/hadoop
-    export HADOOP_HOME=$HADOOP_INSTALL
-    export PATH=${PATH}:$HADOOP_INSTALL/bin:$HADOOP_INSTALL/sbin
-    export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
-    export HADOOP_COMMON_HOME=$HADOOP_INSTALL
-    export HADOOP_HDFS_HOME=$HADOOP_INSTALL
-    export YARN_HOME=$HADOOP_INSTALL
+  export HADOOP_INSTALL=~/hadoop
+  export HADOOP_HOME=$HADOOP_INSTALL
+  export PATH=${PATH}:$HADOOP_INSTALL/bin:$HADOOP_INSTALL/sbin
+  export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
+  export HADOOP_COMMON_HOME=$HADOOP_INSTALL
+  export HADOOP_HDFS_HOME=$HADOOP_INSTALL
+  export YARN_HOME=$HADOOP_INSTALL
 }
 
 # For sed error: illegal byte sequence. via http://stackoverflow.com/questions/19242275/re-error-illegal-byte-sequence-on-mac-os-x
@@ -108,21 +114,21 @@ export LANG=en_US.UTF-8
 
 # for emacs term
 if [[ -n ${INSIDE_EMACS} ]]; then
-        # This shell runs inside an Emacs *shell*/*term* buffer.
-        prompt walters
-        unsetopt zle
+  # This shell runs inside an Emacs *shell*/*term* buffer.
+  prompt walters
+  unsetopt zle
 fi
 
 # Path for RVM
-append_path $HOME/.rvm/bin
+append_path "${HOME}/.rvm/bin"
 
 # node path
 exportENV NODE_PATH /usr/local/lib/node_modules
 
 # for OS161 CSE 521
 [[ -d ~/root && -d ~/os161 && -d ~/src ]] && {
-    alias db="cd ~/root && mips-harvard-os161-gdb kernel"
-    append_path ~/os161/tools/bin
+  alias db="cd ~/root && mips-harvard-os161-gdb kernel"
+  append_path ~/os161/tools/bin
 }
 
 # Vi Mode
@@ -147,4 +153,4 @@ source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
 source_file "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
 
 # for Mac OS only
-[[ `uname` == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
+[[ $(uname) == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"

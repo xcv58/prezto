@@ -11,19 +11,19 @@ exportENV VIMRUNTIME /Applications/MacVim.app/Contents/Resources/vim/runtime
 
 # Path for Shell script
 function setMacHome() {
-    [[ $# != 1 ]] && return;
-    [[ -d $1 ]] || return;
-    local MAC_HOME=$1
-    local MAC_PATH
-    MAC_PATH=(
-        ${MAC_HOME}
-        ${MAC_HOME}/Shell_script
-        ${MAC_HOME}/Shell_script/AppleScript
-        ${MAC_HOME}/OS-161-Scripts
-    )
-    for i in ${MAC_PATH[@]}; do
-        insert_path ${i}
-    done
+  [[ $# != 1 ]] && return;
+  [[ -d $1 ]] || return;
+  local MAC_HOME=$1
+  local MAC_PATH
+  MAC_PATH=(
+    ${MAC_HOME}
+    ${MAC_HOME}/Shell_script
+    ${MAC_HOME}/Shell_script/AppleScript
+    ${MAC_HOME}/OS-161-Scripts
+  )
+  for i in "${MAC_PATH[@]}"; do
+    insert_path "${i}"
+  done
 }
 
 setMacHome ~/MacHome
@@ -36,6 +36,7 @@ insert_path /Applications/Emacs.app/Contents/MacOS
 insert_path /Applications/Emacs.app/Contents/MacOS/bin
 
 ## rvm
+# shellcheck disable=SC1091
 [[ -s "/opt/twitter/rvm/scripts/rvm" ]] && source "/opt/twitter/rvm/scripts/rvm"
 
 # alias atom-beta to atom
@@ -61,9 +62,18 @@ insert_path /Applications/MATLAB_R2014b.app/bin
 function jdk() {
     JVM_PATH=/Library/Java/JavaVirtualMachines
     [[ ! -d ${JVM_PATH} ]] && return
+
     JAVA_CANDIDATE=($(ls ${JVM_PATH}))
-    [[ $# == 0 ]] && select opt in "${JAVA_CANDIDATE[@]}"; do; [[ ${opt} != "" ]] && break; done || opt=$*
-    for i in ${JAVA_CANDIDATE[@]}
+    if [[ $# == 0 ]]; then
+      select opt in "${JAVA_CANDIDATE[@]}"
+      do
+        [[ ${opt} != "" ]] && break;
+      done
+    else
+      opt=$*
+    fi
+
+    for i in "${JAVA_CANDIDATE[@]}"
     do
         [[ ${i} == *${opt}* ]] && export JAVA_HOME="${JVM_PATH}/${i}/Contents/Home"; export STUDIO_JDK="${JVM_PATH}/${i}"
     done

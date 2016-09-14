@@ -10,10 +10,10 @@ function is_twitter_source() {
   local -a larger_repo_dirs
 
   larger_repo_dirs=(
-    "${HOME}/workspace/source"
+  "${HOME}/workspace/source"
   )
 
-  for d in ${larger_repo_dirs}; do
+  for d in "${larger_repo_dirs[@]}"; do
     [[ ${PWD} == ${d}* ]] && return 0
   done
   return 1
@@ -28,7 +28,8 @@ function leave_twitter_source() {
 }
 
 function chpwd() {
-  is_twitter_source && enter_twitter_source || leave_twitter_source
+  is_twitter_source && enter_twitter_source
+  is_twitter_source || leave_twitter_source
 }
 
 # PATH for twitter
@@ -41,13 +42,13 @@ TWITTER_PATH=(
 )
 
 function load_twitter_path() {
-  for p in ${TWITTER_PATH}; do
-    insert_path ${p}
+  for p in "${TWITTER_PATH[@]}"; do
+    insert_path "${p}"
   done
 }
 
 function remove_twitter_path() {
-  for p in ${TWITTER_PATH}; do
-    remove_path ${p}
+  for p in "${TWITTER_PATH[@]}"; do
+    remove_path "${p}"
   done
 }
