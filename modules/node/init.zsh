@@ -14,7 +14,7 @@ function load_nvm() {
 
     # Load package manager installed NVM into the shell session.
     elif (( $+commands[brew] )) && [[ -d "$(brew --prefix nvm 2>/dev/null)" ]]; then
-        source $(brew --prefix nvm)/nvm.sh
+        source "$(brew --prefix nvm)/nvm.sh"
 
     # Return if requirements are not found.
     elif (( ! $+commands[node] )); then

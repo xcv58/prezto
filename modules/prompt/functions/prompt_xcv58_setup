@@ -56,7 +56,8 @@ function get_xcv58_PROMPT {
     local remote_string="in"
     [ -z ${SSH_CLIENT} ] || remote_string="${_prompt_xcv58_colors[1]}SSH%f"
     echo ''
-    echo "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f ${remote_string} ${_prompt_xcv58_colors[5]}%~%f ${vcs_info_msg_0_}"
+    echo "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f ${remote_string} ${_prompt_xcv58_colors[5]}%~%f"
+    [[ ${vcs_info_msg_0_} != "" ]] && echo " ⎇  ${vcs_info_msg_0_}"
     echo '$ '
 }
 
@@ -80,9 +81,8 @@ function prompt_xcv58_precmd {
     local name=$(git config user.name)
     local email=$(git config user.email)
 
-    branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c"
+    branch_format="${_prompt_xcv58_colors[1]}%b%f%u%c"
     is_twitter_source && append_uncheck_symbol || check_untracked_files
-    branch_format="${branch_format})"
     branch_format="${branch_format} ${_prompt_xcv58_colors[3]}${name} <${email}>%f"
 
     zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
