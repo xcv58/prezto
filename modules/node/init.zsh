@@ -36,4 +36,4 @@ function load_nvm() {
     fi
 }
 
-lazy_load load_nvm nvm node npm gulp eslint
+lazy_load load_nvm nvm node npm gulp eslint yarn standard
