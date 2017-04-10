@@ -4,6 +4,7 @@ command -v ag >/dev/null 2>&1 && {
     alias lsg="ls | ag "
     alias lslg="ls -a | ag "
     alias lg="ls -lh | ag "
+    alias ags="ag -G scala$ "
 } || {
     alias lsg="ls | grep "
     alias lslg="ls -a | grep "
