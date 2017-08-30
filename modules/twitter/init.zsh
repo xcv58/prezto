@@ -10,7 +10,7 @@ function is_twitter_source() {
   local -a larger_repo_dirs
 
   larger_repo_dirs=(
-  "${HOME}/workspace/source"
+  "${HOME}/workspace"
   )
 
   for d in "${larger_repo_dirs[@]}"; do
