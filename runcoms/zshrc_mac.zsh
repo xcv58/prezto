@@ -85,7 +85,7 @@ function jdk() {
 jdk 1.7 > /dev/null
 
 source_file "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
-source_file "/usr/local/opt/autoenv/activate.sh"
+# source_file "/usr/local/opt/autoenv/activate.sh"
 
 function mountAndroid() { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
 function umountAndroid() { hdiutil detach /Volumes/android; }
