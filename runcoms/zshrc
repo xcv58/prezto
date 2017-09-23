@@ -154,3 +154,5 @@ source_file "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
 
 # for Mac OS only
 [[ $(uname) == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
+
+export GPG_TTY=$(tty)
