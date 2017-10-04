@@ -63,4 +63,7 @@ command -v python3 >/dev/null 2>&1 && {
     alias p3="python3"
 }
 
+# alias for VIM
+alias v="vim -u NONE"
+
 [[ -s "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh"
