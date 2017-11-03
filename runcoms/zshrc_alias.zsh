@@ -38,6 +38,7 @@ command -v git >/dev/null 2>&1 && {
     alias gcmm="git commit -m"
     alias gdiff="git --no-pager diff"
     alias glog="git --no-pager log"
+    alias gll='git log -n 100'
 }
 
 # alias for Android develop
