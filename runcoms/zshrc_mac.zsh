@@ -31,6 +31,9 @@ setMacHome ~/MacHome
 # Path for LaTeX
 insert_path /usr/local/texlive/2015/bin/universal-darwin
 
+# Path for Mono
+insert_path /Library/Frameworks/Mono.framework/Versions/Current/bin/
+
 # Path for Emacs
 insert_path /Applications/Emacs.app/Contents/MacOS
 insert_path /Applications/Emacs.app/Contents/MacOS/bin
@@ -44,6 +47,9 @@ insert_path /Applications/Emacs.app/Contents/MacOS/bin
 
 # alias for Emacs in Terminal
 command -v Emacs >/dev/null 2>&1 && alias emacs="Emacs -nw"
+
+# alias for Metoer
+command -v meteor >/dev/null 2>&1 && alias m="meteor"
 
 # Path for MacVim
 insert_path /Applications/MacVim.app/Contents/MacOS
