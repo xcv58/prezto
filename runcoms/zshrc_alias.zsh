@@ -1,5 +1,7 @@
 alias l="ls -lh"
 
+alias rn="react-native"
+
 command -v ag >/dev/null 2>&1 && {
     alias lsg="ls | ag "
     alias lslg="ls -a | ag "
