@@ -66,6 +66,15 @@ command -v python3 >/dev/null 2>&1 && {
     alias p3="python3"
 }
 
+# alias for Docker
+command -v docker >/dev/null 2>&1 && {
+    alias doc="docker"
+}
+
+command -v docker-compose >/dev/null 2>&1 && {
+    alias docc="docker-compose"
+}
+
 # alias for VIM
 alias v="vim -u NONE"
 
