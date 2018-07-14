@@ -47,4 +47,4 @@ if (( $+commands[npm] )); then
     fi
 }
 
-lazy_load load_nvm nvm node npm gulp eslint yarn standard react-native npx prisma
+lazy_load load_nvm nvm node npm gulp eslint yarn standard react-native npx prisma prettier
