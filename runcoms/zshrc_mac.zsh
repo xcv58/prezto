@@ -41,6 +41,8 @@ insert_path /Applications/Emacs.app/Contents/MacOS/bin
 insert_path "${ZDOTDIR:-$HOME}/.fastlane/bin"
 insert_path /usr/local/opt/ruby/bin
 
+insert_path "${ZDOTDIR:-$HOME}/Library/flutter/bin"
+
 ## rvm
 # shellcheck disable=SC1091
 [[ -s "/opt/twitter/rvm/scripts/rvm" ]] && source "/opt/twitter/rvm/scripts/rvm"
