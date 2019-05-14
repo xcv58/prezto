@@ -102,3 +102,8 @@ function mountAndroid() { hdiutil attach ~/android.dmg.sparseimage -mountpoint /
 function umountAndroid() { hdiutil detach /Volumes/android; }
 
 command -v lua >/dev/null 2>&1 && eval "$(lua ${ZDOTDIR:-$HOME}/.zprezto/z.lua/z.lua --init zsh)"
+
+function init_brew {
+  command -v brew >/dev/null 2>&1 || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  brew bundle --file=${ZDOTDIR:-$HOME}/MacHome/zprezto/Brewfile
+}
