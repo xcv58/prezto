@@ -14,6 +14,7 @@ function load_nvm() {
 
 # Load package manager installed NVM into the shell session.
 elif (( $+commands[brew] )) && [[ -d "$(brew --prefix nvm 2> /dev/null)" ]]; then
+  export NVM_DIR=$(realpath $(brew --prefix nvm))
   source "$(brew --prefix nvm)/nvm.sh"
 
 # Load manually installed nodenv into the shell session.
