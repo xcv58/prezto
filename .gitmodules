@@ -31,3 +31,6 @@
 [submodule "z.lua"]
 	path = z.lua
 	url = git@github.com:skywind3000/z.lua.git
+[submodule "modules/lazy-load"]
+	path = modules/lazy-load
+	url = https://github.com/xcv58/zsh-lazy-load.git
