@@ -1,7 +1,17 @@
 Editor
 ======
 
-Sets key bindings.
+Sets editor specific key bindings options and variables.
+
+Options
+-------
+
+  - `BEEP` beep on error in line editor.
+
+Variables
+---------
+
+  - `WORDCHARS` treat a given set of characters as part of a word.
 
 Settings
 --------
@@ -96,4 +106,4 @@ Authors
 
   - [Sorin Ionescu](https://github.com/sorin-ionescu)
 
-[1]: https://github.com/sorin-ionescu/oh-my-zsh/issues
+[1]: https://github.com/sorin-ionescu/prezto/issues

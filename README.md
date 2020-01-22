@@ -19,12 +19,23 @@ version is 4.3.11.
 
   2. Clone the repository:
 
-        git clone --recursive https://github.com/xcv58/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+     ```console
+     git clone --recursive https://github.com/xcv58/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+     ```
 
   3. Create a new Zsh configuration by copying the Zsh configuration files
      provided:
 
-        zsh "${ZDOTDIR:-$HOME}/.zprezto/link-dot-files.zsh"
+     ```sh
+     zsh "${ZDOTDIR:-$HOME}/.zprezto/link-dot-files.zsh"
+     ```
+
+     Note: If you already have any of the given configuration files, `ln` will
+     cause error. In simple cases you can load prezto by adding the line
+     `source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"` to the bottom of your
+     `.zshrc` and keep the rest of your Zsh configuration intact. For more
+     complicated setups, it is recommended that you back up your original
+     configs and replace them with the provided prezto runcoms.
 
   4. Set Zsh as your default shell:
 
@@ -76,6 +87,10 @@ accompanying README files to learn of what is available.
      window or tab.
 
      ![sorin theme][2]
+     Note that the 'git' module may be required for special symbols to appear,
+     such as those on the right of the above image. Add `'git'` to the `pmodule`
+     list (under `zstyle ':prezto:load' pmodule \` in your *~/.zpreztorc*) to
+     enable this module.
 
 ### External Modules
 
