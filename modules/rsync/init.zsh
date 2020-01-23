@@ -14,14 +14,15 @@ fi
 # Aliases
 #
 
-_rsync_cmd='rsync --verbose --progress --human-readable --compress --archive --hard-links --one-file-system'
+_rsync_cmd='rsync --verbose --progress --human-readable --compress --archive \
+  --hard-links --one-file-system'
 
 if grep -q 'xattrs' <(rsync --help 2>&1); then
   _rsync_cmd="${_rsync_cmd} --acls --xattrs"
 fi
 
 # macOS and HFS+ Enhancements
-# http://help.bombich.com/kb/overview/credits#opensource
+# https://bombich.com/kb/ccc5/credits
 if [[ "$OSTYPE" == darwin* ]] && grep -q 'file-flags' <(rsync --help 2>&1); then
   _rsync_cmd="${_rsync_cmd} --crtimes --fileflags --protect-decmpfs --force-change"
 fi
