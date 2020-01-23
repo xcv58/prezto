@@ -29,7 +29,7 @@ elif (( $+commands[nodenv] )); then
 
 # Return if requirements are not found.
 elif (( ! $+commands[node] )); then
-    return 1
+  return 1
 fi
 
 # Load NPM and known helper completions.
