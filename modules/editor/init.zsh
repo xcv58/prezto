@@ -202,7 +202,7 @@ zle -N vi-replace
 
 # Expands .... to ../..
 function expand-dot-to-parent-directory-path {
-  if [[ $LBUFFER =~ (^|(((ls|cd) )))(\\.\\./)*\\.\\.$ ]]; then
+  if [[ $LBUFFER = *.. ]]; then
     LBUFFER+='/..'
   else
     LBUFFER+='.'
