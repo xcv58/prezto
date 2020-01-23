@@ -49,18 +49,6 @@ source_file "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
 # Customize to your needs...
 
-# for autojump
-function load_autojump() {
-  # shellcheck disable=SC2154
-  (( $+commands[brew] )) && {
-    # shellcheck disable=SC1091
-    [[ $(uname) == "Linux" && -f /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
-    # shellcheck disable=SC1090
-    [[ $(uname) == "Darwin" && -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && source "$(brew --prefix)/etc/profile.d/autojump.sh"
-  }
-}
-lazy_load load_autojump j
-
 # for Emacs and EmacsClient
 alias ec="emacsclient -n"
 
