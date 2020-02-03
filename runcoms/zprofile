@@ -16,9 +16,13 @@ fi
 #
 # Editors
 #
-
-export EDITOR='nano'
-export VISUAL='nano'
+if [[ -f ~/.vim/vimrc-lite ]]; then
+  export EDITOR='vim -u ~/.vim/lite.vim'
+  export VISUAL='vim -u ~/.vim/lite.vim'
+else
+  export EDITOR='vim'
+  export VISUAL='vim'
+fi
 export PAGER='less'
 
 #

@@ -1,0 +1,162 @@
+#
+# A theme based on Steve Losh's Extravagant Prompt with vcs_info integration.
+#
+# Authors:
+#   Steve Losh <steve@stevelosh.com>
+#   Bart Trojanowski <bart@jukie.net>
+#   Brian Carper <brian@carper.ca>
+#   steeef <steeef@gmail.com>
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#   xcv58 <i@xcv58.com>
+#
+# Screenshots:
+#   http://i.imgur.com/aTlTsfZ.png
+#
+
+
+### check-for-changes disable in some places ####################################
+#
+# Special thanks to Johan Sundström https://github.com/johan. Inspired by Johan
+# Sundström's https://github.com/johan/zsh/blob/master/Misc/vcs_info-examples#L70
+#
+# Some backends (git and mercurial at the time of writing) can tell you
+# whether there are local changes in the current repository. While that's
+# nice, the actions needed to obtain the information can be potentially
+# expensive. So if you're working on something the size of the linux kernel
+# or some corporate code monstrosity you may want to think twice about
+# enabling the `check-for-changes' style unconditionally.
+#
+# Zsh's zstyle configuration system let's you do some magic to enable styles
+# only depending on some code you're running.
+#
+# So, what I'm doing is this: I put larger repo path to a local array.
+# Everytime zsh enter into a directory. It first check whether current directory
+# is under one of the larger repo array. If yes, just disable the check-for-changes
+# functionality. Otherwise running in normal.
+
+function is-check-for-changes-ok() {
+    if [[ fn_exists(is_twitter_source) != 0 ]]; then
+      is_twitter_source && return 1 || return 0
+    fi
+}
+
+function insert-first-word () {
+    zle insert-last-word -- -1 1 -
+}
+
+function xcv58-clear-screen () {
+    clear
+    zle reset-prompt
+}
+
+zle -N insert-first-word
+zle -N xcv58-clear-screen
+
+function get_xcv58_PROMPT {
+    local remote_string="in"
+    [ -z ${SSH_CLIENT} ] || remote_string="${_prompt_xcv58_colors[1]}SSH%f"
+    echo "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f ${remote_string} ${_prompt_xcv58_colors[5]}%~%f"
+    [[ ${vcs_info_msg_0_} != "" ]] && echo " ⎇  ${vcs_info_msg_0_}"
+    echo '$ '
+}
+
+function check_untracked_files () {
+    if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+        branch_format="${branch_format}${untracked_format}"
+    fi
+}
+
+function append_uncheck_symbol () {
+    branch_format="${branch_format}${uncheck_format}"
+}
+
+function prompt_xcv58_precmd {
+    # # Check for untracked files or updated submodules since vcs_info does not.
+    # if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+    #   branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c${_prompt_xcv58_colors[4]}●%f)"
+    # else
+    #   branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c)"
+    # fi
+    local name=$(git config user.name)
+    local email=$(git config user.email)
+
+    branch_format="${_prompt_xcv58_colors[1]}%b%f%u%c"
+    is_twitter_source && append_uncheck_symbol || check_untracked_files
+    branch_format="${branch_format} ${_prompt_xcv58_colors[3]}${name} <${email}>%f"
+
+    zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
+
+    vcs_info 'prompt'
+
+    if (( $+functions[python-info] )); then
+        python-info
+    fi
+    echo ''
+}
+
+function prompt_xcv58_setup {
+    setopt LOCAL_OPTIONS
+    unsetopt XTRACE KSH_ARRAYS
+    prompt_opts=(cr percent subst)
+
+    # Load required functions.
+    autoload -Uz add-zsh-hook
+    autoload -Uz vcs_info
+
+    # Add hook for calling vcs_info before each command.
+    add-zsh-hook precmd prompt_xcv58_precmd
+
+    # Use extended color pallete if available.
+    if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
+        _prompt_xcv58_colors=(
+        "%F{81}"  # Turquoise
+        "%F{166}" # Orange
+        "%F{135}" # Purple
+        "%F{161}" # Hotpink
+        "%F{118}" # Limegreen
+        )
+    else
+        _prompt_xcv58_colors=(
+        "%F{cyan}"
+        "%F{yellow}"
+        "%F{magenta}"
+        "%F{red}"
+        "%F{green}"
+        )
+    fi
+
+    # Formats:
+    #   %b - branchname
+    #   %u - unstagedstr (see below)
+    #   %c - stagedstr (see below)
+    #   %a - action (e.g. rebase-i)
+    #   %R - repository path
+    #   %S - path in the repository
+    local branch_format="(${_prompt_xcv58_colors[1]}%b%f%u%c)"
+    local action_format="(${_prompt_xcv58_colors[5]}%a%f)"
+    local unstaged_format="${_prompt_xcv58_colors[2]} !%f"
+    local staged_format="${_prompt_xcv58_colors[5]} ✓%f"
+    untracked_format="${_prompt_xcv58_colors[4]} ?%f"
+    uncheck_format="${_prompt_xcv58_colors[4]} ✘%f"
+
+    # Set editor-info parameters.
+    zstyle ':prezto:module:editor:info:completing' format '%F{green}...%f'
+    zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{red}--- COMMAND --- %f'
+
+    # Set vcs_info parameters.
+    zstyle ':vcs_info:*' enable bzr git hg svn
+    zstyle -e ':vcs_info:*:prompt:*' check-for-changes 'is-check-for-changes-ok && reply=true || reply=false'
+    zstyle ':vcs_info:*:prompt:*' unstagedstr "${unstaged_format}"
+    zstyle ':vcs_info:*:prompt:*' stagedstr "${staged_format}"
+    zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${action_format}"
+    zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
+    zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
+
+    # Set python-info parameters.
+    zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
+    xcv58_time='%D{%m-%d %H:%M:%S}'
+    PROMPT='$(get_xcv58_PROMPT)'
+    RPROMPT='${editor_info[keymap]}${xcv58_time}'
+}
+
+prompt_xcv58_setup "$@"

@@ -1,0 +1,27 @@
+bindkey -v
+bindkey -M viins "^R" history-incremental-pattern-search-backward
+bindkey -M vicmd "^R" history-incremental-pattern-search-backward
+bindkey -M viins "^S" history-incremental-pattern-search-forward
+bindkey -M vicmd "^S" history-incremental-pattern-search-forward
+bindkey -M viins "^A" beginning-of-line
+bindkey -M vicmd "^A" beginning-of-line
+bindkey -M viins "^E" end-of-line
+bindkey -M vicmd "^E" end-of-line
+bindkey -M viins "^D" delete-char
+bindkey -M viins "^H" backward-delete-char
+bindkey -M viins "^B" backward-char
+bindkey -M viins "^F" forward-char
+bindkey -M viins "^U" backward-kill-line
+bindkey -M viins "^K" kill-line
+bindkey -M vicmd "^K" kill-line
+bindkey -M viins "^W" backward-kill-word
+bindkey -M vicmd "^W" backward-kill-word
+bindkey -M viins "^P" history-beginning-search-backward
+bindkey -M viins "^N" history-beginning-search-forward
+bindkey -M viins "^[[A" history-beginning-search-backward
+bindkey -M viins "^[[B" history-beginning-search-forward
+bindkey -M viins "^V" edit-command-line
+bindkey -M viins "^L" xcv58-clear-screen
+bindkey -M viins "\e." insert-last-word
+bindkey -M viins "\e1" insert-first-word
+bindkey -M viins "\e2" insert-last-word
