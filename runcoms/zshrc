@@ -54,6 +54,9 @@ alias ec="emacsclient -n"
 
 export ALTERNATE_EDITOR="vim"
 
+# Path to set history to ~/.zhistory
+export HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
+
 # Path for groovy
 exportENV GROOVY_HOME /usr/local/opt/groovy/libexec
 
