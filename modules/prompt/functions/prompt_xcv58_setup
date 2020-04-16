@@ -107,6 +107,9 @@ function prompt_xcv58_setup {
     # Add hook for calling vcs_info before each command.
     add-zsh-hook precmd prompt_xcv58_precmd
 
+    # Tell prezto we can manage this prompt
+    zstyle ':prezto:module:prompt' managed 'yes'
+
     # Use extended color pallete if available.
     if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
         _prompt_xcv58_colors=(
@@ -156,6 +159,7 @@ function prompt_xcv58_setup {
     # Set python-info parameters.
     zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
     PROMPT='$(get_xcv58_PROMPT)'
+    RPROMPT='${editor_info[keymap]}'
 }
 
 prompt_xcv58_setup "$@"
