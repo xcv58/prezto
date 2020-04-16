@@ -57,6 +57,7 @@ function get_xcv58_PROMPT {
     [ -z ${SSH_CLIENT} ] || remote_string="${_prompt_xcv58_colors[1]}SSH%f"
     echo "${_prompt_xcv58_colors[3]}%n%f@${_prompt_xcv58_colors[2]}%m%f ${remote_string} ${_prompt_xcv58_colors[5]}%~%f"
     [[ ${vcs_info_msg_0_} != "" ]] && echo " ⎇  ${vcs_info_msg_0_}"
+    printf "%${COLUMNS}s\n" "$(date +'%m-%d %H:%M:%S')"
     echo '$ '
 }
 
@@ -154,9 +155,7 @@ function prompt_xcv58_setup {
 
     # Set python-info parameters.
     zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
-    xcv58_time='%D{%m-%d %H:%M:%S}'
     PROMPT='$(get_xcv58_PROMPT)'
-    RPROMPT='${editor_info[keymap]}${xcv58_time}'
 }
 
 prompt_xcv58_setup "$@"
