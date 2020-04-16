@@ -65,9 +65,6 @@ insert_path /Applications/calibre.app/Contents/MacOS
 # alias vim to Vim for compatible
 command -v Vim >/dev/null 2>&1 && alias vim=Vim
 
-# Path for Matlab
-insert_path /Applications/MATLAB_R2014b.app/bin
-
 # Set JAVA_HOME, this is Mac OS only
 # for Ubuntu please use sudo update-alternatives --config java
 function jdk() {

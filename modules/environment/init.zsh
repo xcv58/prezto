@@ -14,7 +14,7 @@
 # paste had a regression. Additionally, 5.2 added bracketed-paste-url-magic
 # which is generally better than url-quote-magic so we load that when possible.
 autoload -Uz is-at-least
-if [[ ${ZSH_VERSION} != 5.1.1 ]]; then
+if [[ ${ZSH_VERSION} != 5.1.1 && ${TERM} != "dumb" ]]; then
   if is-at-least 5.2; then
     autoload -Uz bracketed-paste-url-magic
     zle -N bracketed-paste bracketed-paste-url-magic
@@ -37,6 +37,9 @@ setopt COMBINING_CHARS      # Combine zero-length punctuation characters (accent
 setopt INTERACTIVE_COMMENTS # Enable comments in interactive shell.
 setopt RC_QUOTES            # Allow 'Henry''s Garage' instead of 'Henry'\''s Garage'.
 unsetopt MAIL_WARNING       # Don't print a warning message if a mail file has been accessed.
+
+# Allow mapping Ctrl+S and Ctrl+Q shortcuts
+[[ -r ${TTY:-} && -w ${TTY:-} && $+commands[stty] == 1 ]] && stty -ixon <$TTY >$TTY
 
 #
 # Jobs

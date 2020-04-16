@@ -7,16 +7,14 @@
 #   Patrick Bos <egpbos@gmail.com>
 #
 
-# Load manually installed pyenv into the shell session.
-if [[ -s "$HOME/.pyenv/bin/pyenv" ]]; then
-  path=("$HOME/.pyenv/bin" $path)
-  export PYENV_ROOT=$(pyenv root)
-  eval "$(pyenv init -)"
+# Load manually installed pyenv into the path
+if [[ -s "${PYENV_ROOT:=$HOME/.pyenv}/bin/pyenv" ]]; then
+  path=("${PYENV_ROOT}/bin" $path)
+  eval "$(pyenv init - --no-rehash zsh)"
 
-# Load package manager installed pyenv into the shell session.
+# Load pyenv into the current python session
 elif (( $+commands[pyenv] )); then
-  export PYENV_ROOT=$(pyenv root)
-  eval "$(pyenv init -)"
+  eval "$(pyenv init - --no-rehash zsh)"
 
 # Prepend PEP 370 per user site packages directory, which defaults to
 # ~/Library/Python on macOS and ~/.local elsewhere, to PATH. The
@@ -57,7 +55,7 @@ function _python-workon-cwd {
   local ENV_NAME=""
   if [[ -f "$PROJECT_ROOT/.venv" ]]; then
     ENV_NAME="$(cat "$PROJECT_ROOT/.venv")"
-  elif [[ -f "$PROJECT_ROOT/.venv/bin/activate" ]];then
+  elif [[ -f "$PROJECT_ROOT/.venv/bin/activate" ]]; then
     ENV_NAME="$PROJECT_ROOT/.venv"
   elif [[ "$PROJECT_ROOT" != "." ]]; then
     ENV_NAME="${PROJECT_ROOT:t}"
@@ -93,8 +91,11 @@ if (( $+VIRTUALENVWRAPPER_VIRTUALENV || $+commands[virtualenv] )) && \
   # Set the directory where virtual environments are stored.
   export WORKON_HOME="${WORKON_HOME:-$HOME/.virtualenvs}"
 
-  # Disable the virtualenv prompt.
-  export VIRTUAL_ENV_DISABLE_PROMPT=1
+  # Disable the virtualenv prompt. Note that we use the magic value used by the
+  # pure prompt because there's some additional logic in that prompt which tries
+  # to figure out if a user set this variable and disable the python portion of
+  # that prompt based on it which is the exact opposite of what we want to do.
+  export VIRTUAL_ENV_DISABLE_PROMPT=12
 
   # Create a sorted array of available virtualenv related 'pyenv' commands to
   # look for plugins of interest. Scanning shell '$path' isn't enough as they
@@ -106,7 +107,7 @@ if (( $+VIRTUALENVWRAPPER_VIRTUALENV || $+commands[virtualenv] )) && \
 
   if (( $pyenv_plugins[(i)virtualenv-init] <= $#pyenv_plugins )); then
     # Enable 'virtualenv' with 'pyenv'.
-    eval "$(pyenv virtualenv-init -)"
+    eval "$(pyenv virtualenv-init - zsh)"
 
     # Optionally activate 'virtualenvwrapper' plugin when available.
     if (( $pyenv_plugins[(i)virtualenvwrapper(_lazy|)] <= $#pyenv_plugins )); then
@@ -144,7 +145,7 @@ fi
 
 # Load PIP completion.
 if (( $#commands[(i)pip(|[23])] )); then
-  cache_file="${TMPDIR:-/tmp}/prezto-python-cache.$UID.zsh"
+  cache_file="${TMPDIR:-/tmp}/prezto-pip-cache.$UID.zsh"
 
   # Detect and use one available from among 'pip', 'pip2', 'pip3' variants
   pip_command="$commands[(i)pip(|[23])]"
@@ -154,10 +155,13 @@ if (( $#commands[(i)pip(|[23])] )); then
         || ! -s "$cache_file" ]]; then
     # pip is slow; cache its output. And also support 'pip2', 'pip3' variants
     $pip_command completion --zsh \
-      | sed -e "s|compctl -K [-_[:alnum:]]* pip|& pip2 pip3|" >! "$cache_file" 2> /dev/null
+      | sed -e "s/\(compctl -K [-_[:alnum:]]* pip\).*/\1{,2,3}{,.{0..9}}/" \
+      >! "$cache_file" \
+      2> /dev/null
   fi
 
   source "$cache_file"
+
   unset cache_file pip_command
 fi
 
