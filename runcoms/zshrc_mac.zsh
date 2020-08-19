@@ -89,8 +89,8 @@ function jdk() {
     echo "Set STUDIO_JDK to ${JAVA_HOME}"
 }
 
-# set default JDK to 1.8
-jdk 1.7 > /dev/null
+# set default JDK to 13
+jdk 13 > /dev/null
 
 source_file "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
 # source_file "/usr/local/opt/autoenv/activate.sh"
