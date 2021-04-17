@@ -156,4 +156,4 @@ if [ -f "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc" ]; then source "
 
 if [ -f "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh" ]; then source "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"; fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source_file "${ZDOTDIR:-$HOME}/.fzf.zsh"
