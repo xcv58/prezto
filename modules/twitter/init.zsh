@@ -5,12 +5,13 @@
 #   xcv58 <i@xcv58.com>
 #
 
-function is_twitter_source() {
+function is_large_repo() {
   local d
   local -a larger_repo_dirs
 
   larger_repo_dirs=(
-  "${HOME}/workspace"
+  "${HOME}/workspace",
+  "${HOME}/stripe"
   )
 
   for d in "${larger_repo_dirs[@]}"; do
@@ -28,8 +29,8 @@ function leave_twitter_source() {
 }
 
 function chpwd() {
-  is_twitter_source && enter_twitter_source
-  is_twitter_source || leave_twitter_source
+  is_large_repo && enter_twitter_source
+  is_large_repo || leave_twitter_source
 }
 
 # PATH for twitter

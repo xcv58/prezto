@@ -35,8 +35,8 @@
 # functionality. Otherwise running in normal.
 
 function is-check-for-changes-ok() {
-    if [[ fn_exists(is_twitter_source) != 0 ]]; then
-      is_twitter_source && return 1 || return 0
+    if [[ fn_exists(is_large_repo) != 0 ]]; then
+      is_large_repo && return 1 || return 0
     fi
 }
 
@@ -82,7 +82,7 @@ function prompt_xcv58_precmd {
     local email=$(git config user.email)
 
     branch_format="${_prompt_xcv58_colors[1]}%b%f%u%c"
-    is_twitter_source && append_uncheck_symbol || check_untracked_files
+    is_large_repo && append_uncheck_symbol || check_untracked_files
     branch_format="${branch_format} ${_prompt_xcv58_colors[3]}${name} <${email}>%f"
 
     zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
