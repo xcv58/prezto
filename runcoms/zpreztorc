@@ -133,6 +133,8 @@ zstyle ':prezto:module:editor' dot-expansion 'no'
 PURE_PROMPT_SYMBOL="$"
 PURE_PROMPT_VICMD_SYMBOL="V"
 PURE_CMD_MAX_EXEC_TIME=2
+zstyle ':prompt:pure:git:branch' color 'white'
+zstyle ':prompt:pure:environment:nix-shell' show 'yes'
 zstyle ':prompt:pure:git:stash' show 'yes'
 zstyle ':prompt:pure:prompt:success' color 'green'
 zstyle ':prompt:pure:prompt:error' color 'red'
