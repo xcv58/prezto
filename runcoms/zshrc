@@ -157,3 +157,9 @@ if [ -f "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc" ]; then source "
 if [ -f "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh" ]; then source "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"; fi
 
 source_file "${ZDOTDIR:-$HOME}/.fzf.zsh"
+
+function xcv58-clear-screen () {
+    clear
+    zle reset-prompt
+}
+zle -N xcv58-clear-screen
