@@ -133,10 +133,16 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 PURE_PROMPT_SYMBOL="$"
 PURE_PROMPT_VICMD_SYMBOL="V"
 PURE_CMD_MAX_EXEC_TIME=2
-zstyle ':prompt:pure:git:branch' color 'white'
+if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
+  zstyle ':prompt:pure:git:branch' color '81'
+  zstyle ':prompt:pure:git:author' color '135'
+  zstyle ':prompt:pure:path' color '118'
+  zstyle ':prompt:pure:prompt:success' color '118'
+else
+  zstyle ':prompt:pure:prompt:success' color 'green'
+fi
 zstyle ':prompt:pure:environment:nix-shell' show 'yes'
 zstyle ':prompt:pure:git:stash' show 'yes'
-zstyle ':prompt:pure:prompt:success' color 'green'
 zstyle ':prompt:pure:prompt:error' color 'red'
 zstyle ':prezto:module:prompt' theme 'pure'
 
