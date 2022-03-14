@@ -134,7 +134,7 @@ PURE_PROMPT_SYMBOL="$"
 PURE_PROMPT_VICMD_SYMBOL="V"
 PURE_CMD_MAX_EXEC_TIME=2
 if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
-  zstyle ':prompt:pure:git:branch' color '81'
+  zstyle ':prompt:pure:git:branch' color '193'
   zstyle ':prompt:pure:git:author' color '135'
   zstyle ':prompt:pure:path' color '118'
   zstyle ':prompt:pure:prompt:success' color '118'
