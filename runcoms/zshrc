@@ -163,3 +163,5 @@ function xcv58-clear-screen () {
     zle reset-prompt
 }
 zle -N xcv58-clear-screen
+
+insert_path "${ZDOTDIR:-$HOME}/stripe/work/exe"
