@@ -165,3 +165,4 @@ function xcv58-clear-screen () {
 zle -N xcv58-clear-screen
 
 insert_path "${ZDOTDIR:-$HOME}/stripe/work/exe"
+insert_path "${ZDOTDIR:-$HOME}/stripe/space-commander/bin"
