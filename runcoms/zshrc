@@ -143,9 +143,6 @@ source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
 # Go Version Manager
 source_file "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
 
-# for Mac OS only
-[[ $(uname) == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
-
 export GPG_TTY=$(tty)
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -166,3 +163,10 @@ zle -N xcv58-clear-screen
 
 insert_path "${ZDOTDIR:-$HOME}/stripe/work/exe"
 insert_path "${ZDOTDIR:-$HOME}/stripe/space-commander/bin"
+insert_path "/opt/homebrew/bin"
+
+# for Mac OS only
+[[ $(uname) == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(rbenv init - zsh)"
