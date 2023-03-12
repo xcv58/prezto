@@ -170,3 +170,6 @@ insert_path "/opt/homebrew/bin"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(rbenv init - zsh)"
+
+# pnpm
+insert_path "${ZDOTDIR:-$HOME}/Library/pnpm"
