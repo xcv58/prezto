@@ -37,3 +37,6 @@
 [submodule "modules/prompt/external/powerlevel10k"]
 	path = modules/prompt/external/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "zsh-abbr"]
+	path = zsh-abbr
+	url = https://github.com/olets/zsh-abbr

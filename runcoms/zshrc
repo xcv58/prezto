@@ -143,6 +143,9 @@ source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
 # Go Version Manager
 source_file "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
 
+# zsh-abbr
+source_file "${ZDOTDIR:-$HOME}/.zprezto/zsh-abbr/zsh-abbr.zsh"
+
 export GPG_TTY=$(tty)
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -169,7 +172,7 @@ insert_path "/opt/homebrew/bin"
 [[ $(uname) == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(rbenv init - zsh)"
+# eval "$(rbenv init - zsh)"
 
 # pnpm
 insert_path "${ZDOTDIR:-$HOME}/Library/pnpm"
