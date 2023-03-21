@@ -175,4 +175,5 @@ insert_path "/opt/homebrew/bin"
 # eval "$(rbenv init - zsh)"
 
 # pnpm
-insert_path "${ZDOTDIR:-$HOME}/Library/pnpm"
+exportENV PNPM_HOME "${ZDOTDIR:-$HOME}/Library/pnpm"
+insert_path "${PNPM_HOME}"
