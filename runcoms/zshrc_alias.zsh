@@ -79,3 +79,7 @@ command -v docker-compose >/dev/null 2>&1 && {
 alias v="vim -u NONE"
 
 [[ -s "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh" ]] && source "${ZDOTDIR:-$HOME}/.zshrc_vimode.zsh"
+
+command -v rg >/dev/null 2>&1 && {
+    alias ag="rg"
+}
