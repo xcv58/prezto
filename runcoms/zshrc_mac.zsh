@@ -90,7 +90,7 @@ function jdk() {
 }
 
 # set default JDK to 13
-jdk 13 > /dev/null
+jdk 20 > /dev/null
 
 source_file "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
 # source_file "/usr/local/opt/autoenv/activate.sh"
