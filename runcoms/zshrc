@@ -167,6 +167,7 @@ zle -N xcv58-clear-screen
 insert_path "${ZDOTDIR:-$HOME}/stripe/work/exe"
 insert_path "${ZDOTDIR:-$HOME}/stripe/space-commander/bin"
 insert_path "/opt/homebrew/bin"
+insert_path "${ZDOTDIR:-$HOME}/.local/bin"
 
 # for Mac OS only
 [[ $(uname) == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
