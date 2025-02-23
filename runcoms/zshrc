@@ -178,3 +178,8 @@ insert_path "${ZDOTDIR:-$HOME}/.local/bin"
 # pnpm
 exportENV PNPM_HOME "${ZDOTDIR:-$HOME}/Library/pnpm"
 insert_path "${PNPM_HOME}"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

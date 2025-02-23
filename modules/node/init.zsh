@@ -58,5 +58,3 @@ done
 }
 
 unset compl_command{s,}
-
-lazy_load load_nvm nvm node npm gulp eslint yarn standard react-native npx prisma prettier pay
