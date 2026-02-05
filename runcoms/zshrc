@@ -7,9 +7,11 @@
 #
 
 function remove_path ()  {
-  # shellcheck disable=SC2155
-  # shellcheck disable=SC2086
-  export PATH=$(echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//');
+  # Pure zsh implementation (no external processes for speed)
+  local -a paths
+  paths=("${(@s/:/)PATH}")
+  paths=(${paths:#$1})
+  export PATH="${(j/:/)paths}"
 }
 
 function insert_path () {
@@ -134,28 +136,83 @@ source_file "${ZDOTDIR:-$HOME}/.zshrc_scpt_alias.zsh"
 # # local config
 source_file "${ZDOTDIR:-$HOME}/.zshrc_local"
 
-# The next line updates PATH for the Google Cloud SDK.
-source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"
+# Go Version Manager (lazy-loaded)
+function load_gvm() {
+    source_file "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
+}
+lazy_load load_gvm go gvm
 
-# The next line enables shell command completion for gcloud.
-source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
+# Google Cloud SDK (lazy-loaded)
+function load_gcloud() {
+    source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"
+    source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
+}
+lazy_load load_gcloud gcloud gsutil bq
 
-# Go Version Manager
-source_file "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
+# zsh-abbr config - store in repo for portability
+export ABBR_USER_ABBREVIATIONS_FILE="${ZDOTDIR:-$HOME}/.zprezto/config/zsh-abbr-user-abbreviations"
 
-# zsh-abbr
-source_file "${ZDOTDIR:-$HOME}/.zprezto/zsh-abbr/zsh-abbr.zsh"
+# zsh-abbr (fast cache-based loading)
+# Full zsh-abbr takes ~600ms due to parsing. This uses cached arrays (~10ms)
+function _load_abbr_fast() {
+    local cache_dir="${TMPDIR:-/tmp}/zsh-abbr"
+    local user_file="$ABBR_USER_ABBREVIATIONS_FILE"
+
+    # Check if cache exists and is valid
+    if [[ -f "$cache_dir/regular-user-abbreviations" ]]; then
+        # Load cached arrays directly (instant!)
+        source "$cache_dir/regular-user-abbreviations" 2>/dev/null
+        source "$cache_dir/global-user-abbreviations" 2>/dev/null
+
+        # Set up minimal expansion widget (the key feature of zsh-abbr)
+        function _abbr_expand_widget() {
+            local abbr="${LBUFFER##* }"
+            local expansion="${ABBR_REGULAR_USER_ABBREVIATIONS[\"$abbr\"]:-${ABBR_GLOBAL_USER_ABBREVIATIONS[\"$abbr\"]}}"
+            if [[ -n "$expansion" ]]; then
+                LBUFFER="${LBUFFER%$abbr}${(Q)expansion}"
+            fi
+        }
+        zle -N _abbr_expand_widget
+
+        # Bind space to expand (like zsh-abbr does)
+        function _abbr_expand_and_space() {
+            _abbr_expand_widget
+            LBUFFER+=" "
+        }
+        zle -N _abbr_expand_and_space
+        bindkey " " _abbr_expand_and_space
+
+        # For full abbr command functionality, lazy-load full plugin
+        function abbr() {
+            unfunction abbr
+            source "${ZDOTDIR:-$HOME}/.zprezto/zsh-abbr/zsh-abbr.zsh"
+            abbr "$@"
+        }
+    else
+        # No cache - fall back to full load (first time only)
+        source_file "${ZDOTDIR:-$HOME}/.zprezto/zsh-abbr/zsh-abbr.zsh"
+    fi
+}
+
+# Load on 2nd prompt for instant first prompt
+_abbr_load_count=0
+function _load_abbr_on_second_prompt() {
+    (( _abbr_load_count++ ))
+    if (( _abbr_load_count >= 2 )); then
+        _load_abbr_fast
+        add-zsh-hook -d precmd _load_abbr_on_second_prompt
+        unset _abbr_load_count
+    fi
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _load_abbr_on_second_prompt
 
 export GPG_TTY=$(tty)
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc" ]; then source "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"; fi
+# iTerm2 shell integration
+source_file "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
 
-# The next line enables shell command completion for gcloud.
-if [ -f "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc" ]; then source "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"; fi
-
-if [ -f "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh" ]; then source "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"; fi
-
+# fzf
 source_file "${ZDOTDIR:-$HOME}/.fzf.zsh"
 
 function xcv58-clear-screen () {
@@ -172,14 +229,14 @@ insert_path "${ZDOTDIR:-$HOME}/.local/bin"
 # for Mac OS only
 [[ $(uname) == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# eval "$(rbenv init - zsh)"
-
 # pnpm
 exportENV PNPM_HOME "${ZDOTDIR:-$HOME}/Library/pnpm"
 insert_path "${PNPM_HOME}"
 
-# nvm
+# nvm (lazy-loaded for fast startup)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+function load_nvm() {
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+lazy_load load_nvm nvm node npm npx yarn pnpm corepack

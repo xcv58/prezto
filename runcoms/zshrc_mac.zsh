@@ -43,9 +43,11 @@ insert_path /usr/local/opt/ruby/bin
 
 insert_path "${ZDOTDIR:-$HOME}/Library/flutter/bin"
 
-## rvm
-# shellcheck disable=SC1091
-[[ -s "/opt/twitter/rvm/scripts/rvm" ]] && source "/opt/twitter/rvm/scripts/rvm"
+## rvm (lazy-loaded)
+function load_rvm() {
+    [[ -s "/opt/twitter/rvm/scripts/rvm" ]] && source "/opt/twitter/rvm/scripts/rvm"
+}
+lazy_load load_rvm rvm
 
 # alias atom-beta to atom
 # command -v atom-beta >/dev/null 2>&1 && alias atom="atom-beta"
@@ -89,16 +91,21 @@ function jdk() {
     echo "Set STUDIO_JDK to ${JAVA_HOME}"
 }
 
-# set default JDK to 13
-jdk 20 > /dev/null
-
-source_file "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
+# set default JDK (lazy - runs on first java/javac call)
+function load_jdk() {
+    jdk 20 > /dev/null
+}
+lazy_load load_jdk java javac jar
 # source_file "/usr/local/opt/autoenv/activate.sh"
 
 function mountAndroid() { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
 function umountAndroid() { hdiutil detach /Volumes/android; }
 
-command -v lua >/dev/null 2>&1 && eval "$(lua ${ZDOTDIR:-$HOME}/.zprezto/z.lua/z.lua --init zsh)"
+# z.lua directory jumping (lazy-loaded)
+function load_zlua() {
+    command -v lua >/dev/null 2>&1 && eval "$(lua ${ZDOTDIR:-$HOME}/.zprezto/z.lua/z.lua --init zsh)"
+}
+lazy_load load_zlua z
 
 function install_brew() {
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
