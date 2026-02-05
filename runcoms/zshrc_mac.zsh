@@ -98,7 +98,29 @@ source_file "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
 function mountAndroid() { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
 function umountAndroid() { hdiutil detach /Volumes/android; }
 
-command -v lua >/dev/null 2>&1 && eval "$(lua ${ZDOTDIR:-$HOME}/.zprezto/z.lua/z.lua --init zsh)"
+function _load_zlua() {
+  if [[ -n "${_lazy_loaded[zlua]}" ]]; then
+    return 0
+  fi
+  local lua_cmd=""
+  local candidates=("${ZLUA_LUA}" lua luajit lua5.4 lua5.3 lua5.2 lua5.1)
+  for c in "${candidates[@]}"; do
+    [[ -n "${c}" ]] || continue
+    if command -v "${c}" >/dev/null 2>&1; then
+      lua_cmd="${c}"
+      break
+    fi
+  done
+  if [[ -z "${lua_cmd}" ]]; then
+    return 127
+  fi
+  local init
+  init="$("${lua_cmd}" "${ZDOTDIR:-$HOME}/.zprezto/z.lua/z.lua" --init zsh enhanced fzf)"
+  [[ -n "${init}" ]] || return 127
+  _lazy_loaded[zlua]=1
+  eval "${init}"
+}
+_lazy_cmd_optional z _load_zlua "z: lua not found or z.lua init failed"
 
 function install_brew() {
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

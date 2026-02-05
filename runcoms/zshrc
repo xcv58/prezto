@@ -6,26 +6,73 @@
 #   xcv58 <i@xcv58.com>
 #
 
+typeset -gU path
+
 function remove_path ()  {
-  # shellcheck disable=SC2155
-  # shellcheck disable=SC2086
-  export PATH=$(echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//');
+  local target="${*}"
+  path=(${path:#$target})
 }
 
 function insert_path () {
-  remove_path "${*}"
-  [[ -d "${*}" ]] && export PATH=${*}:${PATH}
+  local target="${*}"
+  [[ -d "${target}" ]] || return 0
+  path=("${target}" ${path:#$target})
 }
 
 function append_path () {
-  remove_path "${*}"
-  [[ -d "${*}" ]] && export PATH=${PATH}:${*}
+  local target="${*}"
+  [[ -d "${target}" ]] || return 0
+  path=(${path:#$target} "${target}")
 }
 
 function source_file() {
   # shellcheck disable=SC1090
   [[ -s "${*}" ]] && source "${*}"
 }
+
+typeset -gA _lazy_loaded
+
+function _lazy_source() {
+  local key="${1}"
+  local file="${2}"
+  if [[ -z "${_lazy_loaded[$key]}" ]]; then
+    _lazy_loaded[$key]=1
+    [[ -s "${file}" ]] && source "${file}"
+  fi
+}
+
+function _lazy_run() {
+  local key="${1}"
+  shift
+  if [[ -z "${_lazy_loaded[$key]}" ]]; then
+    _lazy_loaded[$key]=1
+    eval "${*}"
+  fi
+}
+
+function _lazy_cmd() {
+  local cmd="${1}"
+  local loader="${2}"
+  eval "function ${cmd}() { unset -f ${cmd}; ${loader}; if whence -w ${cmd} >/dev/null 2>&1; then eval \"${cmd} \\\"\\$@\\\"\"; else command ${cmd} \"\\$@\"; fi }"
+}
+
+function _lazy_cmd_optional() {
+  local cmd="${1}"
+  local loader="${2}"
+  local message="${3}"
+  eval "function ${cmd}() { unset -f ${cmd}; ${loader}; if whence -w ${cmd} >/dev/null 2>&1; then eval \"${cmd} \\\"\\$@\\\"\"; else print -u2 \"${message}\"; return 127; fi }"
+}
+
+function _lazy_eval() {
+  local key="${1}"
+  shift
+  if [[ -z "${_lazy_loaded[$key]}" ]]; then
+    _lazy_loaded[$key]=1
+    eval "${*}"
+  fi
+}
+
+autoload -Uz add-zsh-hook
 
 function exportENV() {
   [[ -d $2 ]] && {
@@ -135,28 +182,42 @@ source_file "${ZDOTDIR:-$HOME}/.zshrc_scpt_alias.zsh"
 source_file "${ZDOTDIR:-$HOME}/.zshrc_local"
 
 # The next line updates PATH for the Google Cloud SDK.
-source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"
-
-# The next line enables shell command completion for gcloud.
-source_file "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
+function _load_gcloud() {
+  _lazy_source gcloud_path "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"
+  _lazy_source gcloud_completion "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"
+}
+_lazy_cmd_optional gcloud _load_gcloud "gcloud: not found or gcloud init failed"
+_lazy_cmd_optional gsutil _load_gcloud "gsutil: not found or gcloud init failed"
+_lazy_cmd_optional bq _load_gcloud "bq: not found or gcloud init failed"
 
 # Go Version Manager
-source_file "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
+function _load_gvm() {
+  _lazy_source gvm "${ZDOTDIR:-$HOME}/.gvm/scripts/gvm"
+}
+_lazy_cmd_optional gvm _load_gvm "gvm: not found or gvm init failed"
 
 # zsh-abbr
-source_file "${ZDOTDIR:-$HOME}/.zprezto/zsh-abbr/zsh-abbr.zsh"
+autoload -Uz add-zle-hook-widget
+function _load_abbr() {
+  if [[ -z "${_lazy_loaded[abbr]}" ]]; then
+    _lazy_loaded[abbr]=1
+    _lazy_source abbr "${ZDOTDIR:-$HOME}/.zprezto/zsh-abbr/zsh-abbr.zsh"
+  fi
+}
+function _abbr_lazy_init() {
+  _load_abbr
+  add-zle-hook-widget -d zle-line-init _abbr_lazy_init
+}
+add-zle-hook-widget zle-line-init _abbr_lazy_init
 
 export GPG_TTY=$(tty)
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc" ]; then source "${ZDOTDIR:-$HOME}/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc" ]; then source "${ZDOTDIR:-$HOME}/google-cloud-sdk/completion.zsh.inc"; fi
-
 if [ -f "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh" ]; then source "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"; fi
 
-source_file "${ZDOTDIR:-$HOME}/.fzf.zsh"
+function _load_fzf() {
+  _lazy_source fzf "${ZDOTDIR:-$HOME}/.fzf.zsh"
+}
+_lazy_cmd_optional fzf _load_fzf "fzf: not found or fzf init failed"
 
 function xcv58-clear-screen () {
     clear
@@ -172,7 +233,8 @@ insert_path "${ZDOTDIR:-$HOME}/.local/bin"
 # for Mac OS only
 [[ $(uname) == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Lazy-loaded above; keep this line disabled to avoid startup cost.
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # eval "$(rbenv init - zsh)"
 
 # pnpm
@@ -181,5 +243,47 @@ insert_path "${PNPM_HOME}"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+function _load_nvm() {
+  _lazy_source nvm "${NVM_DIR}/nvm.sh"
+  _lazy_source nvm_completion "${NVM_DIR}/bash_completion"
+}
+_lazy_cmd_optional nvm _load_nvm "nvm: not found or nvm init failed"
+
+function _load_conda() {
+  local conda_bin="/Users/xcv58/miniconda3/bin/conda"
+  if [[ -x "${conda_bin}" ]]; then
+    __conda_setup="$("${conda_bin}" 'shell.zsh' 'hook' 2> /dev/null)"
+    if [[ $? -eq 0 ]]; then
+      eval "$__conda_setup"
+    else
+      if [[ -f "/Users/xcv58/miniconda3/etc/profile.d/conda.sh" ]]; then
+        . "/Users/xcv58/miniconda3/etc/profile.d/conda.sh"
+      else
+        export PATH="/Users/xcv58/miniconda3/bin:$PATH"
+      fi
+    fi
+    unset __conda_setup
+  fi
+}
+_lazy_cmd_optional conda _load_conda "conda: not found or conda init failed"
+_lazy_cmd_optional mamba _load_conda "mamba: not found or conda init failed"
+
+
+# bun completions
+function _load_bun_completion() {
+  _lazy_source bun_completion "/Users/xcv58/.bun/_bun"
+}
+_lazy_cmd_optional bun _load_bun_completion "bun: not found or bun completion init failed"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/xcv58/.antigravity/antigravity/bin:$PATH"
+
+# OpenClaw Completion
+function _load_openclaw_completion() {
+  _lazy_run openclaw_completion "source <(openclaw completion --shell zsh)"
+}
+_lazy_cmd_optional openclaw _load_openclaw_completion "openclaw: not found or openclaw completion init failed"
