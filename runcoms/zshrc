@@ -164,6 +164,13 @@ function _load_abbr_fast() {
         source "$cache_dir/regular-user-abbreviations" 2>/dev/null
         source "$cache_dir/global-user-abbreviations" 2>/dev/null
 
+        # Self-healing: if cache is empty but user file has content, regenerate
+        if (( ${#ABBR_REGULAR_USER_ABBREVIATIONS} == 0 )) && [[ -s "$user_file" ]]; then
+            rm -rf "$cache_dir"
+            source_file "${ZDOTDIR:-$HOME}/.zprezto/zsh-abbr/zsh-abbr.zsh"
+            return
+        fi
+
         # Set up minimal expansion widget (the key feature of zsh-abbr)
         function _abbr_expand_widget() {
             local abbr="${LBUFFER##* }"
