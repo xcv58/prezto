@@ -247,3 +247,6 @@ function load_nvm() {
 lazy_load load_nvm nvm node npm npx yarn pnpm corepack codex
 
 [[ -f /Users/yihong/stripe/dotfiles/aliases.zsh ]] && source /Users/yihong/stripe/dotfiles/aliases.zsh
+
+# OpenClaw Completion
+source "/Users/xcv58/.openclaw/completions/openclaw.zsh"
