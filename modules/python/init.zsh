@@ -144,26 +144,23 @@ if (( $+VIRTUALENVWRAPPER_VIRTUALENV || $+commands[virtualenv] )) && \
 fi
 
 # Load PIP completion.
-if (( $#commands[(i)pip(|[23])] )); then
-  cache_file="${TMPDIR:-/tmp}/prezto-pip-cache.$UID.zsh"
-
-  # Detect and use one available from among 'pip', 'pip2', 'pip3' variants
-  pip_command="$commands[(i)pip(|[23])]"
-
-  if [[ "$pip_command" -nt "$cache_file" \
-        || "${ZDOTDIR:-$HOME}/.zpreztorc" -nt "$cache_file" \
-        || ! -s "$cache_file" ]]; then
-    # pip is slow; cache its output. And also support 'pip2', 'pip3' variants
-    $pip_command completion --zsh \
-      | sed -e "s/\(compctl -K [-_[:alnum:]]* pip\).*/\1{,2,3}{,.{0..9}}/" \
-      >! "$cache_file" \
-      2> /dev/null
-  fi
-
-  source "$cache_file"
-
-  unset cache_file pip_command
-fi
+# Disabled: modern pip completion output uses compadd which can't be sourced
+# at top-level (only works inside completion functions). The sed transform
+# below also assumes the old compctl-based output format.
+# if (( $#commands[(i)pip(|[23])] )); then
+#   cache_file="${TMPDIR:-/tmp}/prezto-pip-cache.$UID.zsh"
+#   pip_command="$commands[(i)pip(|[23])]"
+#   if [[ "$pip_command" -nt "$cache_file" \
+#         || "${ZDOTDIR:-$HOME}/.zpreztorc" -nt "$cache_file" \
+#         || ! -s "$cache_file" ]]; then
+#     $pip_command completion --zsh \
+#       | sed -e "s/\(compctl -K [-_[:alnum:]]* pip\).*/\1{,2,3}{,.{0..9}}/" \
+#       >! "$cache_file" \
+#       2> /dev/null
+#   fi
+#   source "$cache_file"
+#   unset cache_file pip_command
+# fi
 
 # Load conda into the shell session, if requested
 zstyle -T ':prezto:module:python' conda-init

@@ -116,5 +116,3 @@ function init_brew {
   command -v brew >/dev/null 2>&1 || install_brew
   brew bundle --file=${ZDOTDIR:-$HOME}/MacHome/zprezto/Brewfile
 }
-
-insert_path /opt/homebrew/bin

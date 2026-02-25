@@ -46,6 +46,15 @@ if [[ "$TERM" == "xterm" ]]; then
   export TERM=xterm-256color
 fi
 
+# Tool paths (must be before prezto init — modules like ruby check $+commands[rbenv])
+insert_path /usr/local/bin
+insert_path /usr/local/opt/go/libexec/bin/bin
+insert_path "${ZDOTDIR:-$HOME}/stripe/work/exe"
+insert_path "${ZDOTDIR:-$HOME}/stripe/space-commander/bin"
+insert_path "/opt/homebrew/bin"
+insert_path "${ZDOTDIR:-$HOME}/.local/bin"
+insert_path "${ZDOTDIR:-$HOME}/.antigravity/antigravity/bin"
+
 # Source Prezto.
 source_file "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
@@ -61,12 +70,6 @@ export HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
 
 # Path for groovy
 exportENV GROOVY_HOME /usr/local/opt/groovy/libexec
-
-# Path for /usr/local/bin
-insert_path /usr/local/bin
-
-# Path for go lib
-insert_path /usr/local/opt/go/libexec/bin/bin
 
 # add current directory to PATH
 export PATH=.:${PATH}
@@ -228,12 +231,6 @@ function xcv58-clear-screen () {
 }
 zle -N xcv58-clear-screen
 
-insert_path "${ZDOTDIR:-$HOME}/stripe/work/exe"
-insert_path "${ZDOTDIR:-$HOME}/stripe/space-commander/bin"
-insert_path "/opt/homebrew/bin"
-insert_path "${ZDOTDIR:-$HOME}/.local/bin"
-insert_path "${ZDOTDIR:-$HOME}/.antigravity/antigravity/bin"
-
 # for Mac OS only
 [[ $(uname) == "Darwin" ]] && source_file "${ZDOTDIR:-$HOME}/.zshrc_mac.zsh"
 
@@ -248,3 +245,5 @@ function load_nvm() {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 }
 lazy_load load_nvm nvm node npm npx yarn pnpm corepack codex
+
+[[ -f /Users/yihong/stripe/dotfiles/aliases.zsh ]] && source /Users/yihong/stripe/dotfiles/aliases.zsh
