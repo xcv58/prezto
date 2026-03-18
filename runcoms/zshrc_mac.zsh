@@ -101,12 +101,6 @@ lazy_load load_jdk java javac jar
 function mountAndroid() { hdiutil attach ~/android.dmg.sparseimage -mountpoint /Volumes/android; }
 function umountAndroid() { hdiutil detach /Volumes/android; }
 
-# z.lua directory jumping (lazy-loaded)
-function load_zlua() {
-    command -v lua >/dev/null 2>&1 && eval "$(lua ${ZDOTDIR:-$HOME}/.zprezto/z.lua/z.lua --init zsh)"
-}
-lazy_load load_zlua z
-
 function install_brew() {
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   source "${ZDOTDIR:-$HOME}/.zshrc"

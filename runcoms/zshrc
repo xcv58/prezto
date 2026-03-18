@@ -225,6 +225,9 @@ source_file "${ZDOTDIR:-$HOME}/.iterm2_shell_integration.zsh"
 # fzf
 source_file "${ZDOTDIR:-$HOME}/.fzf.zsh"
 
+# zoxide (directory jumping)
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+
 function xcv58-clear-screen () {
     clear
     zle reset-prompt
