@@ -247,7 +247,7 @@ function load_nvm() {
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 }
-lazy_load load_nvm nvm node npm npx yarn pnpm corepack codex
+lazy_load load_nvm nvm node npm npx yarn pnpm corepack codex paseo
 
 [[ -f ${ZDOTDIR:-$HOME}/stripe/dotfiles/aliases.zsh ]] && source ${ZDOTDIR:-$HOME}/stripe/dotfiles/aliases.zsh
 
