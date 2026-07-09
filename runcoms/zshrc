@@ -253,3 +253,9 @@ lazy_load load_nvm nvm node npm npx yarn pnpm corepack codex paseo
 
 # OpenClaw Completion
 [[ -f ${ZDOTDIR:-$HOME}/.openclaw/completions/openclaw.zsh ]] && source "${ZDOTDIR:-$HOME}/.openclaw/completions/openclaw.zsh"
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
