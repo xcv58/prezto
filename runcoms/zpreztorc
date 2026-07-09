@@ -134,16 +134,22 @@ PURE_PROMPT_SYMBOL="$"
 PURE_PROMPT_VICMD_SYMBOL="V"
 PURE_CMD_MAX_EXEC_TIME=2
 if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
-  zstyle ':prompt:pure:git:branch' color '193'
-  zstyle ':prompt:pure:git:author' color '135'
-  zstyle ':prompt:pure:path' color '118'
-  zstyle ':prompt:pure:prompt:success' color '118'
+  # Tuned for light terminal backgrounds (pale 193/218 washed out on white).
+  # path: bright green | branch: solid green | dirty: strong rose | author: purple
+  zstyle ':prompt:pure:path' color '34'
+  zstyle ':prompt:pure:git:branch' color '28'
+  zstyle ':prompt:pure:git:branch:cached' color '166'
+  zstyle ':prompt:pure:git:branch:loading' color '244'
+  zstyle ':prompt:pure:git:dirty' color '160'
+  zstyle ':prompt:pure:git:author' color '91'
+  zstyle ':prompt:pure:prompt:success' color '28'
+  zstyle ':prompt:pure:prompt:error' color '160'
 else
   zstyle ':prompt:pure:prompt:success' color 'green'
+  zstyle ':prompt:pure:prompt:error' color 'red'
 fi
 zstyle ':prompt:pure:environment:nix-shell' show 'yes'
 zstyle ':prompt:pure:git:stash' show 'yes'
-zstyle ':prompt:pure:prompt:error' color 'red'
 zstyle ':prezto:module:prompt' theme 'pure'
 
 # Set the working directory prompt display length.
